@@ -40,6 +40,7 @@ public class PodshellLeviathanBabyPrefab : PodshellLeviathanPrefab
         template.LocomotionData.forwardRotationSpeed = 0.2f;
         template.StayAtLeashData.leashDistance = 5;
         template.StayAtLeashData.evaluatePriority = BabyStayAtLeashPriority;
+        template.StayAtLeashData.swimVelocity = 2.5f;
         return template;
     }
 
