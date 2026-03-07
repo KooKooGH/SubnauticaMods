@@ -9,5 +9,11 @@
     "Tooltip_PodshellLeviathanEgg": "Podshell leviathans hatch from these.",
     "PodshellFragment": "Podshell shell fragment",
     "Tooltip_PodshellFragment": "A tough, keratinous shell shed from a Podshell Leviathan.",
-    "PodshellIntroduction": "Sensors indicate a slow, deep-frequency heartbeat nearby.<delay=0><duration=4600>\nBiomass readings suggest it is a leviathan-class lifeform. Stay alert.<delay=4700><duration=5300>"
+    "PodshellIntroduction": "Sensors indicate a slow, deep-frequency heartbeat nearby.<delay=0><duration=4600>\nBiomass readings suggest it is a leviathan-class lifeform. Stay alert.<delay=4700><duration=5300>",
+    "PodshellBabyCommand_Wandering": "Command to wander",
+    "PodshellBabyCommand_Following": "Command to follow",
+    "PodshellBabyCommand_Idle": "Command to stay",
+    "PodshellBabyState_Wandering": "Wandering",
+    "PodshellBabyState_Following": "Following",
+    "PodshellBabyState_Idle": "Staying"
 }

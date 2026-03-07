@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace PodshellLeviathan.Mono;
+namespace PodshellLeviathan.Mono.Baby;
 
 public class PodshellBabyHeadScaler : MonoBehaviour
 {

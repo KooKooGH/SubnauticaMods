@@ -3,6 +3,7 @@ using ECCLibrary.Data;
 using Nautilus.Assets;
 using Nautilus.Utility.MaterialModifiers;
 using PodshellLeviathan.Mono;
+using PodshellLeviathan.Mono.Baby;
 using UnityEngine;
 
 namespace PodshellLeviathan.Prefabs;
@@ -45,5 +46,15 @@ public class PodshellLeviathanBabyPrefab : PodshellLeviathanPrefab
         yield return base.ModifyPrefab(prefab, components);
         var head = prefab.transform.Find("turtle_rigged/DO_NOT_TOUCH/root/cog/neck1");
         prefab.AddComponent<PodshellBabyHeadScaler>().headTransform = head;
+
+        var commands = prefab.AddComponent<BabyPodshellCommands>();
+        commands.identifier = components.PrefabIdentifier;
+        commands.voice = prefab.GetComponent<PodshellVoice>();
+        commands.animator = components.Animator;
+
+        var stay = prefab.AddComponent<BabyPodshellStay>();
+        stay.commands = commands;
+        stay.evaluatePriority = 1;
+        stay.rb = components.Rigidbody;
     }
 }

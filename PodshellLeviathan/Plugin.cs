@@ -9,6 +9,8 @@ using PodshellLeviathan.Prefabs;
 using System.Reflection;
 using ECCLibrary;
 using Nautilus.Assets.PrefabTemplates;
+using PodshellLeviathan.Mono;
+using PodshellLeviathan.Mono.Baby;
 using Story;
 using UnityEngine;
 
@@ -47,6 +49,8 @@ public class Plugin : BaseUnityPlugin
         // register harmony patches, if there are any
         Harmony.CreateAndPatchAll(Assembly, $"{PluginInfo.PLUGIN_GUID}");
         Logger.LogInfo($"Plugin {PluginInfo.PLUGIN_GUID} is loaded!");
+        
+        RegisterSaveDataCaches();
     }
 
     private IEnumerator LoadModAsync(WaitScreenHandler.WaitScreenTask task)
@@ -122,5 +126,10 @@ public class Plugin : BaseUnityPlugin
 
         NestPrefabs.Register();
         ShellFragmentPrefab.Register();
+    }
+
+    private static void RegisterSaveDataCaches()
+    {
+        BabyPodshellCommands.RegisterSaveData();
     }
 }

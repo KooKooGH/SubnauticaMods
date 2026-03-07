@@ -15,6 +15,7 @@ public class PodshellVoice : MonoBehaviour, IManagedUpdateBehaviour
     public FMODAsset idle;
     public bool useScreenShake;
     public float maxScreenShakeDistance = 120;
+    public float farRoarDistance = 80f;
     
     private float _timeNextSound;
     
@@ -87,7 +88,7 @@ public class PodshellVoice : MonoBehaviour, IManagedUpdateBehaviour
     public bool PlayRoarSound(bool longRoar)
     {
         var distToCamera = Vector3.Distance(transform.position, MainCamera.camera.transform.position);
-        var close = distToCamera < 80 && Player.main.GetCurrentSub() == null;
+        var close = distToCamera < farRoarDistance && Player.main.GetCurrentSub() == null;
         if (longRoar)
             return PlaySound(close ? longRoarClose : longRoarFar, 8, 7);
         else
