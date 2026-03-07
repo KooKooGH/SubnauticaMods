@@ -3,6 +3,7 @@ using BepInEx;
 using BepInEx.Logging;
 using HarmonyLib;
 using KallieʼsPropPack.PrefabLoading;
+using KallieʼsPropPack.Prefabs.Corpses;
 using KallieʼsPropPack.Prefabs.Grasses;
 using KallieʼsPropPack.Prefabs.Lab;
 using KallieʼsPropPack.Prefabs.Plants;
@@ -299,6 +300,22 @@ public class Plugin : BaseUnityPlugin
         new StrippedPrecursorProp("PrecursorWarperFactorySupport", warperMachineClassId,
             "mesh/Precursor_Lab_Warper_Support",
             StrippedPrecursorProp.CollisionsMode.None).Register();
+        
+        // Corpses
+        
+        new CreatureCorpse("Reaper", TechType.ReaperLeviathan, LargeWorldEntity.CellLevel.Medium).Register();
+        new CreatureCorpse("GhostLeviathan", TechType.GhostLeviathan, LargeWorldEntity.CellLevel.Far).Register();
+        new CreatureCorpse("SeaDragon", TechType.SeaDragon, LargeWorldEntity.CellLevel.Far).Register();
+        new CreatureCorpse("Crabsquid", TechType.CrabSquid, LargeWorldEntity.CellLevel.Medium).Register();
+        new CreatureCorpse("Reefback", TechType.Reefback, LargeWorldEntity.CellLevel.Far).Register();
+        new CreatureCorpse("Stalker", TechType.Stalker, LargeWorldEntity.CellLevel.Medium).Register();
+        new CreatureCorpse("Gasopod", TechType.Gasopod, LargeWorldEntity.CellLevel.Medium).Register();
+        new CreatureCorpse("Boneshark", TechType.BoneShark, LargeWorldEntity.CellLevel.Medium).Register();
+        new CreatureCorpse("Sandshark", TechType.Sandshark, LargeWorldEntity.CellLevel.Medium).Register();
+        new CreatureCorpse("AlienRobot", TechType.PrecursorDroid, LargeWorldEntity.CellLevel.Near).Register();
+        new CreatureCorpse("Warper", TechType.Warper, LargeWorldEntity.CellLevel.Medium).Register();
+        new CreatureCorpse("RiverProwler", TechType.SpineEel, LargeWorldEntity.CellLevel.Medium).Register();
+        new CreatureCorpse("Ampeel", TechType.Shocker, LargeWorldEntity.CellLevel.Medium).Register();
 
         // Register lab entities
 
