@@ -45,13 +45,8 @@ public class StructureMainMenu : StructureHelperMenuBase
             ui.promptHandler.Ask("There is no structure being edited currently!");
             return;
         }
-
-        System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo()
-        {
-            FileName = Path.GetDirectoryName(StructureInstance.Main.path),
-            UseShellExecute = true,
-            Verb = "open"
-        });
+        
+        FileExplorerUtils.OpenFolderInExplorer(Path.GetDirectoryName(StructureInstance.Main.path));
     }
 
     public void OnButtonInstantiateCurrentStructure()
