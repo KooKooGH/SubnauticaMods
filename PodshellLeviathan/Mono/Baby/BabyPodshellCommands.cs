@@ -12,7 +12,7 @@ public class BabyPodshellCommands : HandTarget, IHandTarget
     public PrefabIdentifier identifier;
     public PodshellVoice voice;
     public CreatureFollowPlayer follow;
-    public float commandInterval = 1f;
+    public float commandInterval = 0.2f;
     
     private State _state;
 
