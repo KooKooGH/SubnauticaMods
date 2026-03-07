@@ -33,6 +33,11 @@ public class IceFactory : IEpicPrefabFactory
 
         var modifier = new IceMaterialModifier(isDark);
         modifier.EditMaterial(material, renderer, 0, materialType);
+
+        foreach (var collider in prefab.GetComponentsInChildren<Collider>())
+        {
+            collider.gameObject.layer = LayerID.TerrainCollider;
+        }
         
         yield break;
     }
