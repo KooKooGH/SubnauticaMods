@@ -11,6 +11,7 @@ public class BabyPodshellCommands : HandTarget, IHandTarget
     public Animator animator;
     public PrefabIdentifier identifier;
     public PodshellVoice voice;
+    public CreatureFollowPlayer follow;
     public float commandInterval = 1f;
     
     private State _state;
@@ -74,6 +75,7 @@ public class BabyPodshellCommands : HandTarget, IHandTarget
         _state = state;
         _saveData.savedStates ??= new Dictionary<string, State>();
         _saveData.savedStates[identifier.Id] = state;
+        follow.enabled = state == State.Following;
     }
 
     private State GetNextState()

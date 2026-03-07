@@ -38,6 +38,7 @@ public class PodshellLeviathanBabyPrefab : PodshellLeviathanPrefab
         template.AvoidObstaclesData =
             new AvoidObstaclesData(AvoidTerrainPriority, StandardSwimVelocity, false, 7, 8);
         template.LocomotionData.forwardRotationSpeed = 0.2f;
+        template.StayAtLeashData.leashDistance = 5;
         return template;
     }
 
@@ -56,5 +57,14 @@ public class PodshellLeviathanBabyPrefab : PodshellLeviathanPrefab
         stay.commands = commands;
         stay.evaluatePriority = 1;
         stay.rb = components.Rigidbody;
+
+        var followMode = prefab.AddComponent<BabyPodshellTeleport>();
+        followMode.commands = commands;
+
+        var followPlayer = prefab.AddComponent<CreatureFollowPlayer>();
+        followPlayer.creature = components.Creature;
+        followPlayer.distanceToPlayer = 6;
+
+        commands.follow = followPlayer;
     }
 }
