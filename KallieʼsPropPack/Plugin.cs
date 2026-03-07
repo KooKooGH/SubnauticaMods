@@ -289,6 +289,9 @@ public class Plugin : BaseUnityPlugin
         new StrippedPrecursorProp("PrecursorWallMod1", drfObservationRoomClassId,
             "Precursor_LostRiverBase_ObservationRoom_instances/Precursor_LostRiverBase_ObservationRoom/Precursor_LostRiverBase_ObservationRoom_wall_02/Precursor_LostRiverBase_ObservationRoom_wall_02",
             StrippedPrecursorProp.CollisionsMode.BoundingBox).Register();
+        new StrippedPrecursorProp("PrecursorWallMod1_Far", drfObservationRoomClassId,
+            "Precursor_LostRiverBase_ObservationRoom_instances/Precursor_LostRiverBase_ObservationRoom/Precursor_LostRiverBase_ObservationRoom_wall_02/Precursor_LostRiverBase_ObservationRoom_wall_02",
+            StrippedPrecursorProp.CollisionsMode.BoundingBox, true, LargeWorldEntity.CellLevel.Far).Register();
         new StrippedPrecursorProp("PrecursorWallMod2", drfObservationRoomClassId,
             "Precursor_LostRiverBase_ObservationRoom_instances/Precursor_LostRiverBase_ObservationRoom/Precursor_LostRiverBase_ObservationRoom_wall_02/Precursor_LostRiverBase_ObservationRoom_wall_06",
             StrippedPrecursorProp.CollisionsMode.BoundingBox).Register();
