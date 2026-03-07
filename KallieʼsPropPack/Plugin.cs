@@ -351,5 +351,10 @@ public class Plugin : BaseUnityPlugin
             Bundle.LoadAsset<TextAsset>("IcePrefabs").text));
 
         new ShatterableIce("ShatterableGlacialRock", "ShatterableGlacialRock").Register();
+        
+        // Register other precursor entities
+        
+        prefabLoader.LoadPrefabs(JsonConvert.DeserializeObject<LoadedPrefabRegistrationData>(
+            Bundle.LoadAsset<TextAsset>("ShatteredArchitectPrefabs").text));
     }
 }
