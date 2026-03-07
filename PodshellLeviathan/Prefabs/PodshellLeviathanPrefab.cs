@@ -17,8 +17,9 @@ namespace PodshellLeviathan.Prefabs;
 public class PodshellLeviathanPrefab : CreatureAsset
 {
     protected const float SwimSpeedPriority = 0.1f;
-    protected const float AvoidTerrainPriority = 0.8f;
+    protected const float AvoidTerrainPriority = 0.7f;
     protected const float StayAtLeashPriority = 0.1f;
+    protected const float BabyStayAtLeashPriority = 0.8f;
 
     public PodshellLeviathanPrefab(PrefabInfo prefabInfo) : base(prefabInfo)
     {
