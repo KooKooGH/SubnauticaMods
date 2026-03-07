@@ -5,6 +5,7 @@ using HarmonyLib;
 using KallieʼsPropPack.PrefabLoading;
 using KallieʼsPropPack.Prefabs.Corpses;
 using KallieʼsPropPack.Prefabs.Grasses;
+using KallieʼsPropPack.Prefabs.Ice;
 using KallieʼsPropPack.Prefabs.Lab;
 using KallieʼsPropPack.Prefabs.Plants;
 using KallieʼsPropPack.Prefabs.Precursor;
@@ -238,6 +239,19 @@ public class Plugin : BaseUnityPlugin
             FMODGameParams.InteriorState.Always);
         sclBiomePrefab.SetGameObject(sclBiomeTemplate);
         sclBiomePrefab.Register();
+        
+        var frozenSingleCellBiomeSettings = BiomeUtils.CreateBiomeSettings(new Vector3(2.4f, 2.1f, 1.0f), 0.9f,
+            new Color(0.4f, 0.7f, 1, 1), 1f, new Color(0.9f, 0.9f, 0.9f),
+            0.005f, 30, 2, 2f, -15);
+        BiomeHandler.RegisterBiome("frozensinglecell", frozenSingleCellBiomeSettings,
+            new BiomeHandler.SkyReference("SkyMountains"));
+        var frozenSclBiomePrefab = new CustomPrefab(PrefabInfo.WithTechType("FrozenSCLVolume"));
+        var frozenSclBiomeTemplate = new AtmosphereVolumeTemplate(frozenSclBiomePrefab.Info,
+            AtmosphereVolumeTemplate.VolumeShape.Cube, "frozensinglecell");
+        BiomeHandler.AddBiomeAmbience("frozensinglecell", AudioUtils.GetFmodAsset("FrozenSCL_Ambience"),
+            FMODGameParams.InteriorState.Always);
+        frozenSclBiomePrefab.SetGameObject(frozenSclBiomeTemplate);
+        frozenSclBiomePrefab.Register();
 
         // Register precursor entities
 
@@ -332,5 +346,7 @@ public class Plugin : BaseUnityPlugin
         
         prefabLoader.LoadPrefabs(JsonConvert.DeserializeObject<LoadedPrefabRegistrationData>(
             Bundle.LoadAsset<TextAsset>("IcePrefabs").text));
+
+        new ShatterableIce("ShatterableGlacialRock", "ShatterableGlacialRock").Register();
     }
 }

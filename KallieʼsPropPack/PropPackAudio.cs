@@ -14,7 +14,8 @@ public static class PropPackAudio
 
     internal static void RegisterAudio()
     {
-        RegisterAmbience("SCL_Ambience", "scl ambiance", 2);
+        RegisterAmbience("SCL_Ambience", "scl ambiance");
+        RegisterAmbience("FrozenSCL_Ambience", "FrozenSclAmbience");
     }
 
     private static void RegisterAmbience(string id, string clipName, float fadeOutDuration = 2f,
