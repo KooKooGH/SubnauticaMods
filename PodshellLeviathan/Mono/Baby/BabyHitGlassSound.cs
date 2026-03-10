@@ -12,7 +12,7 @@ public class BabyHitGlassSound : MonoBehaviour
     public float maxDistanceSqr = 14 * 14;
     public float minInterval = 2f;
     
-    public float minHeadOnDot = 0.6f;
+    public float minHeadOnDot = 0.4f;
 
     private float _timeCanPlayAgain;
     
