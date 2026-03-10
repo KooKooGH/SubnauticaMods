@@ -20,6 +20,7 @@ public static class ModAudio
     public static FMODAsset ShortRoarFar { get; } = AudioUtils.GetFmodAsset("PodshellShortRoarFar");
     public static FMODAsset TeethGrinding { get; } = AudioUtils.GetFmodAsset("PodshellTeethGrinding");
     public static FMODAsset PodshellBabyRoar { get; } = AudioUtils.GetFmodAsset("PodshellBabyRoar");
+    public static FMODAsset PodshellBabyHitHead { get; } = AudioUtils.GetFmodAsset("PodshellBabyHitHead");
     
     // music
     public static FMODAsset PodshellMusic { get; } = AudioUtils.GetFmodAsset("PodshellMusic");
@@ -33,7 +34,8 @@ public static class ModAudio
         RegisterPodshellSound(LongRoarFar, "Long roar_ far_ underwater", 10, 400);
         RegisterPodshellSound(ShortRoarClose, "Short roar_ close_ underwater", 10, 400);
         RegisterPodshellSound(ShortRoarFar, "Short roar_ far_ underwater", 10, 400);
-        RegisterPodshellSound(TeethGrinding, "Teeth grinding underwater", 10, 320f);
+        RegisterPodshellSound(TeethGrinding, "Teeth grinding underwater", 10, 320);
+        RegisterPodshellSound(PodshellBabyHitHead, "turtle hit head", 1, 10);
         RegisterPodshellSound(PodshellBabyRoar, 1.4f, 27f, new[]
         {
             "PodshellBabyRoar1",

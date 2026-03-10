@@ -50,6 +50,8 @@ public class PodshellLeviathanBabyPrefab : PodshellLeviathanPrefab
         var head = prefab.transform.Find("turtle_rigged/DO_NOT_TOUCH/root/cog/neck1");
         prefab.AddComponent<PodshellBabyHeadScaler>().headTransform = head;
 
+        var waterParkCreature = prefab.GetComponent<WaterParkCreature>();
+        
         var commands = prefab.AddComponent<BabyPodshellCommands>();
         commands.identifier = components.PrefabIdentifier;
         commands.voice = prefab.GetComponent<PodshellVoice>();
@@ -68,5 +70,10 @@ public class PodshellLeviathanBabyPrefab : PodshellLeviathanPrefab
         followPlayer.distanceToPlayer = 6;
 
         commands.follow = followPlayer;
+
+        var hitGlass = prefab.AddComponent<BabyHitGlassSound>();
+        hitGlass.sound = ModAudio.PodshellBabyHitHead;
+        hitGlass.waterPark = waterParkCreature;
+        hitGlass.rb = components.Rigidbody;
     }
 }
