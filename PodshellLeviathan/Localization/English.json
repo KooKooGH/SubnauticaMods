@@ -15,5 +15,7 @@
     "PodshellBabyCommand_Idle": "Command to stay",
     "PodshellBabyState_Wandering": "Wandering",
     "PodshellBabyState_Following": "Following",
-    "PodshellBabyState_Idle": "Staying"
+    "PodshellBabyState_Idle": "Staying",
+    "PodshellPoster": "Podshell poster",
+    "Tooltip_PodshellPoster": "Podshell leviathan poster."
 }

@@ -32,6 +32,7 @@ public class Plugin : BaseUnityPlugin
 
     internal static PodshellLeviathanJuvenilePrefab PodshellLeviathanJuvenile { get; private set; }
     internal static PodshellLeviathanBabyPrefab PodshellLeviathanBaby { get; private set; }
+    internal static PrefabInfo PodshellPosterInfo { get; private set; }
 
     private bool _assetsLoaded;
 
@@ -126,6 +127,11 @@ public class Plugin : BaseUnityPlugin
 
         NestPrefabs.Register();
         ShellFragmentPrefab.Register();
+        
+        PodshellPosterInfo = PrefabInfo.WithTechType("PodshellPoster", null, null)
+            .WithIcon(Assets.LoadAsset<Sprite>("PodshellPosterIcon"));
+        new PosterPrefab(PodshellPosterInfo, () => Assets.LoadAsset<Texture2D>("PodshellPoster"))
+            .Register();
     }
 
     private static void RegisterSaveDataCaches()
