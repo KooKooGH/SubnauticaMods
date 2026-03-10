@@ -8,6 +8,7 @@ namespace PodshellLeviathan.Mono.Baby;
 
 public class BabyPodshellCommands : HandTarget, IHandTarget
 {
+    public WaterParkCreature waterPark;
     public Animator animator;
     public PrefabIdentifier identifier;
     public PodshellVoice voice;
@@ -54,12 +55,18 @@ public class BabyPodshellCommands : HandTarget, IHandTarget
 
     public void OnHandHover(GUIHand hand)
     {
+        if (waterPark.IsInsideWaterPark())
+            return;
+
         HandReticle.main.SetText(HandReticle.TextType.HandSubscript, GetCommandText(GetNextState()), true, GameInput.Button.LeftHand); 
         HandReticle.main.SetText(HandReticle.TextType.Hand, GetCurrentStateText(_state), true); 
     }
 
     public void OnHandClick(GUIHand hand)
     {
+        if (waterPark.IsInsideWaterPark())
+            return;
+        
         if (Time.time < _timeCommandAgain)
             return;
 

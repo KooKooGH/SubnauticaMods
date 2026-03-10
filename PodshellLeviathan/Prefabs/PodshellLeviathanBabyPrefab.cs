@@ -56,6 +56,7 @@ public class PodshellLeviathanBabyPrefab : PodshellLeviathanPrefab
         commands.identifier = components.PrefabIdentifier;
         commands.voice = prefab.GetComponent<PodshellVoice>();
         commands.animator = components.Animator;
+        commands.waterPark = waterParkCreature;
 
         var stay = prefab.AddComponent<BabyPodshellStay>();
         stay.commands = commands;
