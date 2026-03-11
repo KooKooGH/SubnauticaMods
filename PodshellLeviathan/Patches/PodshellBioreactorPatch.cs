@@ -20,7 +20,7 @@ public static class PodshellBioreactorPatch
 
     private static IEnumerator PlayPodshellBioreactorSound(Vector3 position)
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(0.7f);
         FMODUWE.PlayOneShot(ModAudio.PodshellBabyInBioreactor, position);
     }
 }
