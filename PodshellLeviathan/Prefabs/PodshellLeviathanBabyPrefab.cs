@@ -2,7 +2,6 @@
 using ECCLibrary.Data;
 using Nautilus.Assets;
 using Nautilus.Utility.MaterialModifiers;
-using PodshellLeviathan.Mono;
 using PodshellLeviathan.Mono.Baby;
 using UnityEngine;
 
@@ -33,14 +32,10 @@ public class PodshellLeviathanBabyPrefab : PodshellLeviathanPrefab
     {
         var template = base.CreateTemplate();
         template.BioReactorCharge = 650;
-        template.SetWaterParkCreatureData(new WaterParkCreatureDataStruct(0.18f, 0.3f, 0.9f, 2, false, false,
-            new CustomGameObjectReference(PrefabInfo.ClassID)));
         template.AvoidObstaclesData =
             new AvoidObstaclesData(AvoidTerrainPriority, StandardSwimVelocity, false, 7, 8);
         template.LocomotionData.forwardRotationSpeed = 0.2f;
-        template.StayAtLeashData.leashDistance = 5;
-        template.StayAtLeashData.evaluatePriority = BabyStayAtLeashPriority;
-        template.StayAtLeashData.swimVelocity = 2.5f;
+        template.CellLevel = LargeWorldEntity.CellLevel.Medium;
         return template;
     }
 
@@ -49,32 +44,5 @@ public class PodshellLeviathanBabyPrefab : PodshellLeviathanPrefab
         yield return base.ModifyPrefab(prefab, components);
         var head = prefab.transform.Find("turtle_rigged/DO_NOT_TOUCH/root/cog/neck1");
         prefab.AddComponent<PodshellBabyHeadScaler>().headTransform = head;
-
-        var waterParkCreature = prefab.GetComponent<WaterParkCreature>();
-        
-        var commands = prefab.AddComponent<BabyPodshellCommands>();
-        commands.identifier = components.PrefabIdentifier;
-        commands.voice = prefab.GetComponent<PodshellVoice>();
-        commands.animator = components.Animator;
-        commands.waterPark = waterParkCreature;
-
-        var stay = prefab.AddComponent<BabyPodshellStay>();
-        stay.commands = commands;
-        stay.evaluatePriority = 1;
-        stay.rb = components.Rigidbody;
-
-        var followMode = prefab.AddComponent<BabyPodshellTeleport>();
-        followMode.commands = commands;
-
-        var followPlayer = prefab.AddComponent<CreatureFollowPlayer>();
-        followPlayer.creature = components.Creature;
-        followPlayer.distanceToPlayer = 6;
-
-        commands.follow = followPlayer;
-
-        var hitGlass = prefab.AddComponent<BabyHitGlassSound>();
-        hitGlass.sound = ModAudio.PodshellBabyHitHead;
-        hitGlass.waterPark = waterParkCreature;
-        hitGlass.rb = components.Rigidbody;
     }
 }

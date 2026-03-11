@@ -221,7 +221,7 @@
       "priority": 0
     },
     {
-      "classId": "PodshellLeviathanBaby",
+      "classId": "PodshellLeviathanBaby_Wild",
       "id": "c38f9844-5800-4dc1-bdc8-0d2636567a37",
       "position": {
         "x": 268.2466,
@@ -265,7 +265,7 @@
       "priority": 0
     },
     {
-      "classId": "PodshellLeviathanBaby",
+      "classId": "PodshellLeviathanBaby_Wild",
       "id": "16be4e3e-f682-4694-8b38-d4f771b27f85",
       "position": {
         "x": -1298.978,
@@ -309,7 +309,7 @@
       "priority": 0
     },
     {
-      "classId": "PodshellLeviathanBaby",
+      "classId": "PodshellLeviathanBaby_Wild",
       "id": "79cc4881-4565-463d-af9b-8546b3a3fabc",
       "position": {
         "x": 1547.73621,
@@ -397,7 +397,7 @@
       "priority": 0
     },
     {
-      "classId": "PodshellLeviathanBaby",
+      "classId": "PodshellLeviathanBaby_Wild",
       "id": "81fa4c2b-461b-463b-abbe-71aa650f08a3",
       "position": {
         "x": 937.9195,

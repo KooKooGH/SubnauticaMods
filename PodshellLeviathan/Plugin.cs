@@ -32,6 +32,7 @@ public class Plugin : BaseUnityPlugin
 
     internal static PodshellLeviathanJuvenilePrefab PodshellLeviathanJuvenile { get; private set; }
     internal static PodshellLeviathanBabyPrefab PodshellLeviathanBaby { get; private set; }
+    internal static PodshellHatchedBabyPrefab PodshellLeviathanHatchedBaby { get; private set; }
     internal static PrefabInfo PodshellPosterInfo { get; private set; }
 
     private bool _assetsLoaded;
@@ -98,10 +99,16 @@ public class Plugin : BaseUnityPlugin
         PodshellLeviathanJuvenile.Register();
 
         PodshellLeviathanBaby = new PodshellLeviathanBabyPrefab(
-            PrefabInfo.WithTechType("PodshellLeviathanBaby", null, null)
+            PrefabInfo.WithTechType("PodshellLeviathanBaby_Wild", null, null)
                 .WithSizeInInventory(new Vector2int(4, 3))
                 .WithIcon(Assets.LoadAsset<Sprite>("PodshellBabyIcon")));
         PodshellLeviathanBaby.Register();
+        
+        PodshellLeviathanHatchedBaby = new PodshellHatchedBabyPrefab(
+            PrefabInfo.WithTechType("PodshellLeviathanBaby", null, null)
+                .WithSizeInInventory(new Vector2int(4, 3))
+                .WithIcon(Assets.LoadAsset<Sprite>("PodshellBabyIcon")));
+        PodshellLeviathanHatchedBaby.Register();
 
         var podshellEggPrefab = new CustomPrefab(PrefabInfo.WithTechType("PodshellLeviathanEgg")
             .WithSizeInInventory(new Vector2int(3, 3))
@@ -110,7 +117,7 @@ public class Plugin : BaseUnityPlugin
                 Assets.LoadAsset<GameObject>("PodshellEgg"))
             .WithMass(75)
             .WithCellLevel(LargeWorldEntity.CellLevel.Medium)
-            .WithHatchingCreature(PodshellLeviathanBaby.PrefabInfo.TechType)
+            .WithHatchingCreature(PodshellLeviathanHatchedBaby.PrefabInfo.TechType)
             .WithHatchingTime(1.5f)
             .WithMaxHealth(300)
             .SetUndiscoveredTechType();
