@@ -21,7 +21,7 @@ public static class FloatingFoundation
         var prefab = new CustomPrefab(Info);
         prefab.SetGameObject(BuildPrefab);
         prefab.SetRecipe(new RecipeData(new Ingredient(TechType.Titanium, 2),
-            new Ingredient(TechType.Silicone, 2),
+            new Ingredient(TechType.Silicone, 1),
             new Ingredient(TechType.Floater, 1)
             ));
         prefab.SetPdaGroupCategoryAfter(TechGroup.BasePieces, TechCategory.BasePiece, TechType.BaseFoundation);

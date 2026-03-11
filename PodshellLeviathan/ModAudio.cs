@@ -21,6 +21,8 @@ public static class ModAudio
     public static FMODAsset TeethGrinding { get; } = AudioUtils.GetFmodAsset("PodshellTeethGrinding");
     public static FMODAsset PodshellBabyRoar { get; } = AudioUtils.GetFmodAsset("PodshellBabyRoar");
     public static FMODAsset PodshellBabyHitHead { get; } = AudioUtils.GetFmodAsset("PodshellBabyHitHead");
+    public static FMODAsset PodshellBabyDeath { get; } = AudioUtils.GetFmodAsset("PodshellBabyDeath");
+    public static FMODAsset PodshellBabyInBioreactor { get; } = AudioUtils.GetFmodAsset("PodshellBabyBioreactor");
     
     // music
     public static FMODAsset PodshellMusic { get; } = AudioUtils.GetFmodAsset("PodshellMusic");
@@ -43,15 +45,17 @@ public static class ModAudio
             "PodshellBabyRoar3",
             "PodshellBabyRoar4"
         });
+        RegisterPodshellSound(PodshellBabyDeath, "podshell baby death", 2, 30);
+        RegisterPodshellSound(PodshellBabyInBioreactor, "podshell baby in bioreactor", 2, 20, AudioUtils.BusPaths.SFX);
 
         RegisterMusic(PodshellMusic, "PodshellLeviathanOST", 2);
     }
 
-    private static void RegisterPodshellSound(FMODAsset asset, string clipName, float minDistance, float maxDistance)
+    private static void RegisterPodshellSound(FMODAsset asset, string clipName, float minDistance, float maxDistance, string bus = AudioUtils.BusPaths.UnderwaterCreatures)
     {
         var sound = AudioUtils.CreateSound(Plugin.Assets.LoadAsset<AudioClip>(clipName), AudioUtils.StandardSoundModes_3D);
         sound.set3DMinMaxDistance(minDistance, maxDistance);
-        CustomSoundHandler.RegisterCustomSound(asset.path, sound, AudioUtils.BusPaths.UnderwaterCreatures);
+        CustomSoundHandler.RegisterCustomSound(asset.path, sound, bus);
     }
     
     private static void RegisterPodshellSound(FMODAsset asset, float minDistance, float maxDistance, string[] clipNames)

@@ -23,6 +23,7 @@ public class PodshellLeviathanBabyPrefab : PodshellLeviathanPrefab
     protected override FMODAsset LongRoarFar => ModAudio.PodshellBabyRoar;
     protected override FMODAsset ShortRoarClose => ModAudio.PodshellBabyRoar;
     protected override FMODAsset ShortRoarFar => ModAudio.PodshellBabyRoar;
+    protected override FMODAsset DeathSound => ModAudio.PodshellBabyDeath;
     protected override bool UseBabySounds => true;
     protected override bool TriggerIntroductionGoal => false;
 

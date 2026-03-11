@@ -9,6 +9,7 @@ using Nautilus.Handlers;
 using Nautilus.Utility.MaterialModifiers;
 using Nautilus.Utility.ModMessages;
 using PodshellLeviathan.Mono;
+using rail;
 using Story;
 using UnityEngine;
 
@@ -40,6 +41,7 @@ public class PodshellLeviathanPrefab : CreatureAsset
     protected virtual FMODAsset ShortRoarFar => ModAudio.ShortRoarFar;
     protected virtual FMODAsset LongRoarClose => ModAudio.LongRoarClose;
     protected virtual FMODAsset LongRoarFar => ModAudio.LongRoarFar;
+    protected virtual FMODAsset DeathSound => ModAudio.Death;
     protected virtual bool UseBabySounds => false;
 
     protected override CreatureTemplate CreateTemplate()
@@ -85,6 +87,7 @@ public class PodshellLeviathanPrefab : CreatureAsset
         voice.shortRoarFar = ShortRoarFar;
         voice.longRoarClose = LongRoarClose;
         voice.longRoarFar = LongRoarFar;
+        voice.death = DeathSound;
 
         var behavior = (PodshellLeviathanBehavior)components.Creature;
 

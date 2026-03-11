@@ -13,6 +13,7 @@ public class PodshellVoice : MonoBehaviour, IManagedUpdateBehaviour
     public FMODAsset longRoarClose;
     public FMODAsset longRoarFar;
     public FMODAsset idle;
+    public FMODAsset death;
     public bool useScreenShake;
     public float maxScreenShakeDistance = 120;
     public float farRoarDistance = 80f;
@@ -51,7 +52,7 @@ public class PodshellVoice : MonoBehaviour, IManagedUpdateBehaviour
 
     public void OnKill()
     {
-        FMODUWE.PlayOneShot(ModAudio.Death, transform.position);
+        FMODUWE.PlayOneShot(death, transform.position);
     }
     
     public void ManagedUpdate()
