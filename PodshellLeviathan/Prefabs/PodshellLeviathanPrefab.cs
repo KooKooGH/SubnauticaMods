@@ -26,7 +26,7 @@ public class PodshellLeviathanPrefab : CreatureAsset
     {
     }
 
-    protected virtual float StandardSwimVelocity => 3;
+    protected virtual float StandardSwimVelocity => 5;
     protected virtual string ModelName => "PodshellLeviathanPrefab";
     protected virtual float MaxHealth => 6000;
     protected virtual float Mass => 3000f;
