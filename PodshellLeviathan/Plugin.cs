@@ -17,7 +17,7 @@ using UnityEngine;
 namespace PodshellLeviathan;
 
 [BepInPlugin(PluginInfo.PLUGIN_GUID, PluginInfo.PLUGIN_NAME, PluginInfo.PLUGIN_VERSION)]
-[BepInDependency("com.snmodding.nautilus", "1.0.0.47")]
+[BepInDependency("com.snmodding.nautilus", "1.0.0.49")]
 [BepInDependency("com.lee23.ecclibrary", "2.2.0")]
 [BepInDependency("com.lee23.kalliesproppack", "1.2.8")]
 public class Plugin : BaseUnityPlugin
