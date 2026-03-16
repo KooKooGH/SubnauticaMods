@@ -97,6 +97,10 @@ public class Plugin : BaseUnityPlugin
         PodshellLeviathanJuvenile = new PodshellLeviathanJuvenilePrefab(
             PrefabInfo.WithTechType("PodshellLeviathanJuvenile", null, null));
         PodshellLeviathanJuvenile.Register();
+        CreatureDataUtils.AddCreaturePDAEncyclopediaEntry(PodshellLeviathanJuvenile, "Lifeforms/Fauna/Leviathans/Podshell",
+            null, null, 6,
+            Assets.LoadAsset<Texture2D>("PodshellEntryImage"),
+            Assets.LoadAsset<Sprite>("PodshellPopup"));
 
         PodshellLeviathanBaby = new PodshellLeviathanBabyPrefab(
             PrefabInfo.WithTechType("PodshellLeviathanBaby_Wild", null, null)
