@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using Nautilus.Assets;
+using Nautilus.Handlers;
 using Nautilus.Utility;
 using UnityEngine;
 
@@ -16,6 +17,9 @@ public static class ShellFragmentPrefab
         var prefab = new CustomPrefab(Info);
         prefab.SetGameObject(GetPrefab);
         prefab.Register();
+        PDAHandler.AddEncyclopediaEntry("PodshellShellFragment", "Lifeforms/Fauna/Leviathans/Podshell",
+            null, null, Plugin.Assets.LoadAsset<Sprite>("ShellFragmentPopup"));
+        PDAHandler.AddCustomScannerEntry(Info.TechType, 3, false, "PodshellShellFragment");
     }
 
     private static IEnumerator GetPrefab(IOut<GameObject> result)
