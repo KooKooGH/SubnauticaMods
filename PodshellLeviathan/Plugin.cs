@@ -89,7 +89,7 @@ public class Plugin : BaseUnityPlugin
         PodshellLeviathan = new PodshellLeviathanPrefab(
             PrefabInfo.WithTechType("PodshellLeviathan", null, null));
         PodshellLeviathan.Register();
-        CreatureDataUtils.AddCreaturePDAEncyclopediaEntry(PodshellLeviathan, "Lifeforms/Fauna/Leviathans",
+        CreatureDataUtils.AddCreaturePDAEncyclopediaEntry(PodshellLeviathan, "Lifeforms/Fauna/Leviathans/Podshell",
             null, null, 8,
             Assets.LoadAsset<Texture2D>("PodshellEntryImage"),
             Assets.LoadAsset<Sprite>("PodshellPopup"));
