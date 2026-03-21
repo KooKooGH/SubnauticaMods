@@ -16,7 +16,7 @@ public class DestroyItemAfterDelay : MonoBehaviour, IScheduledUpdateBehaviour
 
     public string GetProfileTag()
     {
-        return "TRP:DestroyItemAfterDelay";
+        return "Podshell:DestroyItemAfterDelay";
     }
 
     private void Start()
