@@ -38,6 +38,7 @@ public class Plugin : BaseUnityPlugin
     private bool _assetsLoaded;
 
     internal static StoryGoal IntroductionGoal { get; private set; }
+    internal static StoryGoal PickUpPosterGoal { get; private set; }
 
 
     private void Awake()
@@ -82,6 +83,7 @@ public class Plugin : BaseUnityPlugin
         IntroductionGoal = new StoryGoal("PodshellIntroduction", Story.GoalType.PDA, 0);
         PDAHandler.AddLogEntry(IntroductionGoal.key, IntroductionGoal.key,
             Assets.LoadAsset<AudioClip>("PodshellDiscoveryPDA"), Assets.LoadAsset<Sprite>("PdaLogIcon"));
+        PickUpPosterGoal = new StoryGoal("PickUpPodshellPoster", Story.GoalType.Story, 0);
     }
 
     private void InitializePrefabs()

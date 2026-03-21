@@ -14,6 +14,7 @@ public class BabyPodshellCommands : HandTarget, IHandTarget
     public PodshellVoice voice;
     public CreatureFollowPlayer follow;
     public float commandInterval = 0.2f;
+    public BabyGifting gifting;
     
     private State _state;
 
@@ -56,7 +57,16 @@ public class BabyPodshellCommands : HandTarget, IHandTarget
     public void OnHandHover(GUIHand hand)
     {
         if (waterPark.IsInsideWaterPark())
+        {
+            return;   
+        }
+
+        if (gifting.IsHoldingGift())
+        {
+            var gift = gifting.GetGift();
+            gift.OnHandHover(hand);
             return;
+        }
 
         HandReticle.main.SetText(HandReticle.TextType.HandSubscript, GetCommandText(GetNextState()), true, GameInput.Button.LeftHand); 
         HandReticle.main.SetText(HandReticle.TextType.Hand, GetCurrentStateText(_state), true); 
@@ -66,6 +76,13 @@ public class BabyPodshellCommands : HandTarget, IHandTarget
     {
         if (waterPark.IsInsideWaterPark())
             return;
+
+        if (gifting.IsHoldingGift())
+        {
+            var gift = gifting.GetGift();
+            gift.OnHandClick(hand);
+            return;
+        }
         
         if (Time.time < _timeCommandAgain)
             return;

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using ECCLibrary.Data;
 using Nautilus.Assets;
+using Nautilus.Extensions;
 using PodshellLeviathan.Mono;
 using PodshellLeviathan.Mono.Baby;
 using UnityEngine;
@@ -66,5 +67,14 @@ public class PodshellHatchedBabyPrefab : PodshellLeviathanBabyPrefab
         var behaviour = components.Creature as PodshellBabyBehaviour;
         behaviour.cinematicTarget = handTarget.gameObject;
         behaviour.waterParkCreature = waterParkCreature;
+
+        var giftParent = prefab.transform.SearchChild("GiftTransform");
+        var gifting = prefab.AddComponent<BabyGifting>();
+        gifting.giftParent = giftParent;
+        gifting.colliders = prefab.GetComponentsInChildren<Collider>();
+        gifting.animator = components.Animator;
+        gifting.waterPark = waterParkCreature;
+
+        commands.gifting = gifting;
     }
 }

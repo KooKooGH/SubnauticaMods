@@ -2,6 +2,7 @@
 using Nautilus.Assets;
 using Nautilus.Assets.Gadgets;
 using Nautilus.Assets.PrefabTemplates;
+using PodshellLeviathan.Mono.Baby;
 using UnityEngine;
 
 namespace PodshellLeviathan.Prefabs;
@@ -34,6 +35,11 @@ public class PosterPrefab
                 var posterImage = _posterImage.Invoke();
                 posterMaterial.mainTexture = posterImage;
                 posterMaterial.SetTexture(SpecTex, posterImage);
+
+                if (Info.TechType == Plugin.PodshellPosterInfo.TechType)
+                {
+                    obj.AddComponent<DisablePosterSpawnsOnPickUp>().pickupable = obj.GetComponent<Pickupable>();
+                }
             }
         });
         prefab.Register();
