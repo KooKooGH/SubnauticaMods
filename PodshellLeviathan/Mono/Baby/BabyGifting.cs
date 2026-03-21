@@ -10,8 +10,8 @@ public class BabyGifting : MonoBehaviour, IScheduledUpdateBehaviour
     public Collider[] colliders;
     public Animator animator;
     public WaterParkCreature waterPark;
-    public float findGiftIntervalMin = 60 * 0.01f; // FIX LATER
-    public float findGiftIntervalMax = 60 * 0.01f; // FIX LATER
+    public float findGiftIntervalMin = 60 * 4;
+    public float findGiftIntervalMax = 60 * 8;
     // 0: Must be directly behind the camera, 1: must be horizontal to the camera 
     public float offScreenTolerance = 0.7f;
     public float spawnPosterChance = 0.1f;
