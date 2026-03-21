@@ -8,7 +8,7 @@ namespace PodshellLeviathan.Prefabs;
 
 public static class ShellFragmentPrefab
 {
-    public static PrefabInfo Info { get; } = PrefabInfo.WithTechType("PodshellFragment")
+    public static PrefabInfo Info { get; } = PrefabInfo.WithTechType("PodshellShellFragment")
         .WithIcon(Plugin.Assets.LoadAsset<Sprite>("ShellFragmentIcon"))
         .WithSizeInInventory(new Vector2int(3, 3));
     
