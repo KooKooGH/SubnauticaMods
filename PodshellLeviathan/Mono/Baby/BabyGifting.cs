@@ -15,6 +15,7 @@ public class BabyGifting : MonoBehaviour, IScheduledUpdateBehaviour
     // 0: Must be directly behind the camera, 1: must be horizontal to the camera 
     public float offScreenTolerance = 0.7f;
     public float spawnPosterChance = 0.1f;
+    public float spawnPosterAgainChance = 0.025f;
     
     private bool _loadingGift;
     private Pickupable _gift;
@@ -60,9 +61,12 @@ public class BabyGifting : MonoBehaviour, IScheduledUpdateBehaviour
 
     private TechType GetRandomItem()
     {
-        if (Random.value < spawnPosterChance && CanGiftPoster())
+        if (Random.value < spawnPosterChance)
         {
-            return Plugin.PodshellPosterInfo.TechType;
+            if (CanGiftPoster() || Random.value < spawnPosterAgainChance)
+            {
+                return Plugin.PodshellPosterInfo.TechType;
+            }
         }
 
         return _items[Random.Range(0, _items.Length)];
