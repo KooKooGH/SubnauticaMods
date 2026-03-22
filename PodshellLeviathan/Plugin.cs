@@ -9,7 +9,6 @@ using PodshellLeviathan.Prefabs;
 using System.Reflection;
 using ECCLibrary;
 using Nautilus.Assets.PrefabTemplates;
-using PodshellLeviathan.Mono;
 using PodshellLeviathan.Mono.Baby;
 using Story;
 using UnityEngine;
@@ -20,6 +19,7 @@ namespace PodshellLeviathan;
 [BepInDependency("com.snmodding.nautilus", "1.0.0.49")]
 [BepInDependency("com.lee23.ecclibrary", "2.2.0")]
 [BepInDependency("com.lee23.kalliesproppack", "1.2.8")]
+[BepInDependency("com.lee23.theredplague", BepInDependency.DependencyFlags.SoftDependency)]
 public class Plugin : BaseUnityPlugin
 {
     public new static ManualLogSource Logger { get; private set; }
@@ -39,10 +39,14 @@ public class Plugin : BaseUnityPlugin
 
     internal static StoryGoal IntroductionGoal { get; private set; }
     internal static StoryGoal PickUpPosterGoal { get; private set; }
+    
+    internal static bool RedPlagueInstalled { get; private set; }
 
 
     private void Awake()
     {
+        RedPlagueInstalled = BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.lee23.theredplague");
+        
         // set project-scoped logger instance
         Logger = base.Logger;
 

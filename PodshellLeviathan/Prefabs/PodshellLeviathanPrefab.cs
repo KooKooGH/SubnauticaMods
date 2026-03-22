@@ -101,7 +101,7 @@ public class PodshellLeviathanPrefab : CreatureAsset
 
         behavior.voice = voice;
 
-        if (BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.lee23.theredplague"))
+        if (Plugin.RedPlagueInstalled)
         {
             var infectedMixin = prefab.AddComponent<InfectedMixin>();
             infectedMixin.renderers = prefab.GetComponentsInChildren<Renderer>(true)
