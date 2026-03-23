@@ -26,6 +26,8 @@ public class Plugin : BaseUnityPlugin
         // set project-scoped logger instance
         Logger = base.Logger;
 
+        LanguageHandler.RegisterLocalizationFolder();
+        
         WaitScreenHandler.RegisterEarlyLoadTask(PluginInfo.PLUGIN_NAME, RegisterMod);
 
         // register harmony patches, if there are any
