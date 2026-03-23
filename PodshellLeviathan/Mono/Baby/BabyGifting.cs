@@ -1,4 +1,6 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
+using Nautilus.Handlers;
 using Story;
 using UnityEngine;
 
@@ -22,6 +24,9 @@ public class BabyGifting : MonoBehaviour, IScheduledUpdateBehaviour
 
     private double _timeTryAgain;
 
+    private TechType _amalgamatedBone;
+    private TechType _mysteriousRemains;
+
     private readonly TechType[] _items =
     {
         TechType.NutrientBlock,
@@ -31,8 +36,11 @@ public class BabyGifting : MonoBehaviour, IScheduledUpdateBehaviour
         TechType.CreepvineSeedCluster,
         TechType.Copper,
         TechType.Titanium,
+        TechType.Quartz,
         TechType.CreepvinePiece
     };
+
+    private List<TechType> _fullItemPool; 
 
     private static readonly int Holding = Animator.StringToHash("holding");
 
@@ -45,8 +53,25 @@ public class BabyGifting : MonoBehaviour, IScheduledUpdateBehaviour
 
     private void OnEnable()
     {
+        InitializeItems();
         UpdateSchedulerUtils.Register(this);
         SetHoldingState(_gift != null);
+    }
+
+    private void InitializeItems()
+    {
+        if (_fullItemPool != null) return;
+        _fullItemPool = new List<TechType>();
+        _fullItemPool.AddRange(_items);
+        
+        // MOD COMPATIBILITY
+        if (Plugin.RedPlagueInstalled)
+        {
+            if (EnumHandler.TryGetValue("AmalgamatedBone", out _amalgamatedBone))
+                _fullItemPool.Add(_amalgamatedBone);
+            if (EnumHandler.TryGetValue("MysteriousRemains", out _mysteriousRemains))
+                _fullItemPool.Add(_mysteriousRemains);
+        }
     }
 
     private void OnDisable()
@@ -69,7 +94,7 @@ public class BabyGifting : MonoBehaviour, IScheduledUpdateBehaviour
             }
         }
 
-        return _items[Random.Range(0, _items.Length)];
+        return _fullItemPool[Random.Range(0, _fullItemPool.Count)];
     }
 
     private void ResetTimer()
@@ -186,6 +211,11 @@ public class BabyGifting : MonoBehaviour, IScheduledUpdateBehaviour
         {
             return new Vector3(0, 0, 0.00001f);
         }
+        
+        if (giftType == TechType.Quartz)
+        {
+            return new Vector3(0f, -0.00005f, 0);
+        }
 
         return Vector3.zero;
     }
@@ -206,6 +236,11 @@ public class BabyGifting : MonoBehaviour, IScheduledUpdateBehaviour
         {
             return new Vector3(0, 0, 188.571f);
         }
+
+        if (giftType == TechType.Quartz)
+        {
+            return new Vector3(355, 0, 0);
+        }
         
         bool isWater = giftType == TechType.FilteredWater || giftType == TechType.WaterFiltrationSuitWater;
         if (isWater)
@@ -218,9 +253,14 @@ public class BabyGifting : MonoBehaviour, IScheduledUpdateBehaviour
     
     private Vector3 GetGiftScale(TechType giftType)
     {
-        if (giftType == TechType.Titanium || giftType == TechType.Copper)
+        if (giftType == TechType.Titanium || giftType == TechType.Copper || giftType == TechType.Quartz)
         {
             return Vector3.one * 0.6f;
+        }
+
+        if (Plugin.RedPlagueInstalled && giftType == _mysteriousRemains)
+        {
+            return Vector3.one * 0.5f;
         }
 
         return Vector3.one;
