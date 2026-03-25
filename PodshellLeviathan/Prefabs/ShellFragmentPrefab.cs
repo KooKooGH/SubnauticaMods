@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using Nautilus.Assets;
+using Nautilus.Assets.Gadgets;
 using Nautilus.Handlers;
 using Nautilus.Utility;
+using PodshellLeviathan.Mono.BasePieces;
 using UnityEngine;
 
 namespace PodshellLeviathan.Prefabs;
@@ -16,6 +18,7 @@ public static class ShellFragmentPrefab
     {
         var prefab = new CustomPrefab(Info);
         prefab.SetGameObject(GetPrefab);
+        prefab.SetEquipment(EquipmentType.Hand);
         prefab.Register();
         PDAHandler.AddEncyclopediaEntry("PodshellShellFragment", "Lifeforms/Fauna/Leviathans/Podshell",
             null, null, Plugin.Assets.LoadAsset<Sprite>("ShellFragmentPopup"));
@@ -33,6 +36,20 @@ public static class ShellFragmentPrefab
         PrefabUtils.AddWorldForces(obj, 10, 2f, 1.4f);
         PrefabUtils.AddResourceTracker(obj, Info.TechType);
         obj.AddComponent<Pickupable>();
+        
+        // Allow holding
+        var viewModel = obj.transform.Find("ViewModel").gameObject;
+        var worldModel = obj.transform.Find("WorldModel").gameObject;
+        var fpModel = obj.AddComponent<FPModel>();
+        fpModel.viewModel = viewModel;
+        fpModel.propModel = worldModel;
+
+        var tool = obj.AddComponent<ApplyPodshellFragment>();
+        tool.mainCollider = obj.GetComponent<Collider>();
+        tool.drawSound = AudioUtils.GetFmodAsset("event:/loot/pickup_fish");
+        tool.hasAnimations = true;
+        tool.ikAimRightArm = true;
+        
         yield return null;
         result.Set(obj);
     }
