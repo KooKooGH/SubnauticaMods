@@ -17,6 +17,7 @@ public class PodshellLeviathanPrefab : CreatureAsset
     protected const float AvoidTerrainPriority = 0.7f;
     protected const float StayAtLeashPriority = 0.1f;
     protected const float BabyStayAtLeashPriority = 0.8f;
+    protected const float FleePriority = 0.6f;
 
     public PodshellLeviathanPrefab(PrefabInfo prefabInfo) : base(prefabInfo)
     {
@@ -61,6 +62,7 @@ public class PodshellLeviathanPrefab : CreatureAsset
         template.AnimateByVelocityData = new AnimateByVelocityData(StandardSwimVelocity - 1f);
         template.LiveMixinData.broadcastKillOnDeath = true;
         template.SwimBehaviourData = new SwimBehaviourData(0.3f);
+        template.FleeOnDamageData = new FleeOnDamageData(FleePriority, StandardSwimVelocity * 1.5f);
 
         template.SetCreatureComponentType<PodshellLeviathanBehavior>();
 
