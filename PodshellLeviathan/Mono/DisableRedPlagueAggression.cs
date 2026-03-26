@@ -22,6 +22,16 @@ public class DisableRedPlagueAggression : MonoBehaviour, IScheduledUpdateBehavio
             attack.evaluatePriority = 0;
             _completedMyPurpose = true;
         }
+        
+        var melee = GetComponent<MeleeAttack>();
+        if (melee != null)
+        {
+            melee.canBiteCreature = false;
+            melee.canBitePlayer = false;
+            melee.canBiteVehicle = false;
+            melee.canBiteCyclops = false;
+            melee.enabled = false;
+        }
     }
 
     public int scheduledUpdateIndex { get; set; }
