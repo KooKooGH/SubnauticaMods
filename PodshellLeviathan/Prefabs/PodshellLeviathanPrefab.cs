@@ -150,6 +150,8 @@ public class PodshellLeviathanPrefab : CreatureAsset
             head.Find("l_eye3.R")
         };
 
+        prefab.AddComponent<DisableRedPlagueAggression>();
+
         yield break;
     }
 
