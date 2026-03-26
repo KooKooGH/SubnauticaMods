@@ -23,6 +23,7 @@ public static class ShellFragmentPrefab
         PDAHandler.AddEncyclopediaEntry("PodshellShellFragment", "Lifeforms/Fauna/Leviathans/Podshell",
             null, null, Plugin.Assets.LoadAsset<Sprite>("ShellFragmentPopup"));
         PDAHandler.AddCustomScannerEntry(Info.TechType, 3, false, "PodshellShellFragment");
+        BaseBioReactor.charge.Add(Info.TechType, 700);
     }
 
     private static IEnumerator GetPrefab(IOut<GameObject> result)
