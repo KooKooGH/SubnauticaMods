@@ -6,7 +6,6 @@ public class ApplyPodshellFragment : PlayerTool
 
     public override bool OnRightHandDown()
     {
-        ErrorMessage.AddMessage("On use");
-        return true;
+        return false;
     }
 }
