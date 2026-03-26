@@ -5,6 +5,7 @@ namespace PodshellLeviathan.Mono.Baby;
 public class BabyHitGlassSound : MonoBehaviour
 {
     public FMODAsset sound;
+    public FMODAsset soundAtSurface;
     public WaterParkCreature waterPark;
     public Rigidbody rb;
 
@@ -12,7 +13,7 @@ public class BabyHitGlassSound : MonoBehaviour
     public float maxDistanceSqr = 14 * 14;
     public float minInterval = 2f;
     
-    public float minHeadOnDot = 0.4f;
+    public float minHeadOnDot = 0.3f;
 
     private float _timeCanPlayAgain;
     
@@ -27,7 +28,7 @@ public class BabyHitGlassSound : MonoBehaviour
         if (other.impulse.sqrMagnitude < minImpulseSqrMagnitude)
             return;
         
-        var distanceToCamera = Vector3.SqrMagnitude(transform.position - waterPark.transform.position);
+        var distanceToCamera = Vector3.SqrMagnitude(MainCamera.camera.transform.position - transform.position);
         if (distanceToCamera > maxDistanceSqr)
             return;
         
@@ -43,6 +44,6 @@ public class BabyHitGlassSound : MonoBehaviour
             return;
 
         _timeCanPlayAgain = Time.time + minInterval;
-        FMODUWE.PlayOneShot(sound, transform.position);
+        FMODUWE.PlayOneShot(Ocean.GetDepthOf(Player.main.gameObject) > 0 ? sound : soundAtSurface, transform.position);
     }
 }
