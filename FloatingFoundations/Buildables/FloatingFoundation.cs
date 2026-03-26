@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 using FloatingFoundations.API;
+using FloatingFoundations.MonoBehaviours;
 using Nautilus.Assets;
 using Nautilus.Assets.Gadgets;
 using Nautilus.Crafting;
@@ -80,6 +81,7 @@ public static class FloatingFoundation
         clipProxy.layer = LayerID.BaseClipProxy;
         prefab.AddComponent<FixClipProxyLayer>().clipProxy = clipProxy;
 
+        prefab.AddComponent<DisableClipProxy>().clipProxy = clipProxy;
         result.Set(prefab);
     }
 
