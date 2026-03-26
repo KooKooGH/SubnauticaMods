@@ -14,7 +14,8 @@ namespace PodshellLeviathan.Prefabs;
 public class PodshellLeviathanPrefab : CreatureAsset
 {
     protected const float SwimSpeedPriority = 0.1f;
-    protected const float AvoidTerrainPriority = 0.7f;
+    protected const float AvoidObstaclesPriority = 0.7f;
+    protected const float AvoidTerrainPriority = 0.6767f;
     protected const float StayAtLeashPriority = 0.1f;
     protected const float BabyStayAtLeashPriority = 0.8f;
     protected const float FleePriority = 0.6f;
@@ -54,7 +55,9 @@ public class PodshellLeviathanPrefab : CreatureAsset
         template.SwimRandomData = new SwimRandomData(SwimSpeedPriority, StandardSwimVelocity, new Vector3(100, 4, 100),
             5f, 1f, true);
         template.AvoidObstaclesData =
-            new AvoidObstaclesData(AvoidTerrainPriority, StandardSwimVelocity, true, 30, 30);
+            new AvoidObstaclesData(AvoidObstaclesPriority, StandardSwimVelocity, true, 30, 30);
+        template.AvoidTerrainData =
+            new AvoidTerrainData(AvoidTerrainPriority, StandardSwimVelocity, 25, 25);
         template.StayAtLeashData = new StayAtLeashData(StayAtLeashPriority, StandardSwimVelocity, 140f);
         template.CanBeInfected = false;
         template.SizeDistribution = new AnimationCurve(new Keyframe(0f, 0.7f), new Keyframe(1f, 1f));

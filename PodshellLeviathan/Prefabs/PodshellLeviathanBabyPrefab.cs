@@ -34,9 +34,10 @@ public class PodshellLeviathanBabyPrefab : PodshellLeviathanPrefab
         var template = base.CreateTemplate();
         template.BioReactorCharge = 650;
         template.AvoidObstaclesData =
-            new AvoidObstaclesData(AvoidTerrainPriority, StandardSwimVelocity, false, 7, 8);
+            new AvoidObstaclesData(AvoidObstaclesPriority, StandardSwimVelocity, false, 7, 8);
         template.LocomotionData.forwardRotationSpeed = 0.2f;
         template.CellLevel = LargeWorldEntity.CellLevel.Medium;
+        template.AvoidTerrainData = null;
         return template;
     }
 
