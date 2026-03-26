@@ -15,7 +15,8 @@ namespace FloatingFoundations.Buildables;
 
 public static class FloatingFoundation
 {
-    public static PrefabInfo Info { get; private set; } = PrefabInfo.WithTechType("FloatingFoundation");
+    public static PrefabInfo Info { get; } = PrefabInfo.WithTechType("FloatingFoundation")
+        .WithIcon(Plugin.Bundle.LoadAsset<Sprite>("FloatingFoundationIcon"));
 
     public static void Register()
     {
