@@ -84,6 +84,20 @@ public static class FloatingFoundation
         prefab.AddComponent<FixClipProxyLayer>().clipProxy = clipProxy;
 
         prefab.AddComponent<DisableClipProxy>().clipProxy = clipProxy;
+
+        var colliderHolder = prefab.transform.Find("BaseFoundationPiece(Clone)/models/BaseFoundationPlatform");
+        var newColliderObj = new GameObject("Collider");
+        newColliderObj.transform.SetParent(colliderHolder);
+        newColliderObj.transform.localScale = Vector3.one;
+        newColliderObj.transform.localPosition = Vector3.zero;
+        newColliderObj.transform.localRotation = Quaternion.identity;
+        var originalCollider = colliderHolder.GetComponent<BoxCollider>();
+        var newCollider = newColliderObj.AddComponent<BoxCollider>();
+        newCollider.center = originalCollider.center;
+        newCollider.size = originalCollider.size;
+        newColliderObj.layer = LayerID.TerrainCollider;
+        Object.DestroyImmediate(originalCollider);
+
         result.Set(prefab);
     }
 
