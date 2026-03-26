@@ -48,7 +48,7 @@ public static class FloatingFoundation
         foundationModel.transform.localPosition = new Vector3(0, -1, 0);
         foundationModel.transform.localRotation = Quaternion.identity;
 
-        var pillowPrefab = Object.Instantiate(Plugin.Bundle.LoadAsset<GameObject>("FoundationPillowsPrefab"));
+        var pillowPrefab = Plugin.Bundle.LoadAsset<GameObject>("FoundationPillowsPrefab");
         
         var pillows = Object.Instantiate(pillowPrefab, foundationModel.transform);
         pillows.transform.localPosition = Vector3.zero;
