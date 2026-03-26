@@ -47,13 +47,7 @@ internal class PodshellMaterialModifier : MaterialModifier
         
         if (renderer.gameObject.name == "head_low")
         {
-            if (materialIndex == 1)
-            {
-                material.SetFloat(SpecInt, 2);
-                material.SetFloat(Shininess, 8);
-                material.SetFloat(Fresnel, 0f);
-            }
-            else
+            if (materialIndex == 0)
             {
                 material.SetFloat(MyCullVariable, 0);
             }
