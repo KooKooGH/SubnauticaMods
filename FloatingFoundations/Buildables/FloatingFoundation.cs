@@ -62,7 +62,7 @@ public static class FloatingFoundation
         constructable.forceUpright = true;
         constructable.placeDefaultDistance = 10;
         constructable.placeMinDistance = 3;
-        constructable.placeMaxDistance = 20;
+        constructable.placeMaxDistance = 13;
         constructable.allowedUnderwater = false;
         
         var seamothRequest = CraftData.GetPrefabForTechTypeAsync(TechType.Seamoth);
