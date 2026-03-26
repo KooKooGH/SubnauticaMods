@@ -49,7 +49,7 @@ public class PodshellLeviathanPrefab : CreatureAsset
             EcoTargetType.Leviathan,
             MaxHealth);
 
-        CreatureTemplateUtils.SetCreatureDataEssentials(template, LargeWorldEntity.CellLevel.VeryFar, Mass, 0,
+        CreatureTemplateUtils.SetCreatureDataEssentials(template, LargeWorldEntity.CellLevel.Far, Mass, 0,
             new BehaviourLODData(150, 250, 300), 10000);
         template.SwimRandomData = new SwimRandomData(SwimSpeedPriority, StandardSwimVelocity, new Vector3(100, 4, 100),
             5f, 1f, true);
