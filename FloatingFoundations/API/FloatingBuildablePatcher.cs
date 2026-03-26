@@ -1,4 +1,6 @@
-﻿using HarmonyLib;
+﻿using System.Collections.Generic;
+using HarmonyLib;
+using Nautilus.Extensions;
 using UnityEngine;
 
 namespace FloatingFoundations.API;
@@ -15,26 +17,123 @@ public static class FloatingBuildablePatcher
         var aimTransform = Builder.GetAimTransform();
         var originalPosition = aimTransform.position + aimTransform.forward * Builder.placeDefaultDistance;
         
-        bool snapToWaterSurface = Mathf.Abs(originalPosition.y - FloatingBuildableUtils.GetSeaLevelForTechType(Builder.constructableTechType)) < Builder.placeDefaultDistance;
+        bool snapToWaterSurface = Mathf.Abs(originalPosition.y - FloatingBuildableUtils.GetSeaLevelForTechType(Builder.constructableTechType)) < Builder.placeDefaultDistance / 2;
 
         if (snapToWaterSurface)
         {
+            if (string.IsNullOrEmpty(GameInput.GetBinding(GameInput.PrimaryDevice, Plugin.SnapToBasesButton, GameInput.BindingSet.Primary)))
+            {
+                ErrorMessage.main.AddHint(Language.main.GetFormat("FloatingFoundationSnapUnboundHint"));
+            }
+            else
+            {
+                ErrorMessage.main.AddHint(LanguageCache.GetButtonFormat("FloatingFoundationSnapHint", Plugin.SnapToBasesButton));
+            }
             __result = true;
         }
     }
 
-    private static Vector3 GetPlacedPosition(float seaLevel)
+    private static void GetPlacedPosition(float seaLevel, ref Vector3 position, ref Quaternion rotation)
     {
         var aimTransform = Builder.GetAimTransform();
-        var originalPosition = aimTransform.position + aimTransform.forward * Builder.placeDefaultDistance;
-        return new Vector3(originalPosition.x, seaLevel, originalPosition.z);
+        position = aimTransform.position + aimTransform.forward * Builder.placeDefaultDistance;
+        bool snapToWaterSurface = Mathf.Abs(position.y - FloatingBuildableUtils.GetSeaLevelForTechType(Builder.constructableTechType)) < Builder.placeDefaultDistance / 2;
+        if (!snapToWaterSurface)
+        {
+            return;
+        }
+        var finalPosition = position;
+        var targetBase = BaseGhost.FindBase(MainCamera.camera.transform);
+        finalPosition = SnapPlacement(new Vector3(finalPosition.x, seaLevel, finalPosition.z), targetBase);
+        position = new Vector3(finalPosition.x, seaLevel, finalPosition.z);
+        if (GameInput.GetButtonHeld(Plugin.SnapToBasesButton))
+        {
+            if (targetBase != null)
+            {
+                rotation = targetBase.transform.rotation;
+            }
+            else
+            {
+                rotation = Quaternion.identity;
+            }
+        }
     }
 
     [HarmonyPostfix]
     [HarmonyPatch(typeof(Builder), nameof(Builder.SetDefaultPlaceTransform))]
-    private static void SetDefaultPlaceTransformPostfix(ref Vector3 position)
+    private static void SetDefaultPlaceTransformPostfix(ref Vector3 position, ref Quaternion rotation)
     {
         if (!FloatingBuildableUtils.FloatingTechTypes.Contains(Builder.constructableTechType)) return;
-        position = GetPlacedPosition(FloatingBuildableUtils.GetSeaLevelForTechType(Builder.constructableTechType));
+        GetPlacedPosition(FloatingBuildableUtils.GetSeaLevelForTechType(Builder.constructableTechType), ref position, ref rotation);
+    }
+    
+    private static Vector3 SnapPlacement(Vector3 position, Base targetBase)
+    {
+        bool snap = GameInput.GetButtonHeld(Plugin.SnapToBasesButton);
+        if (!snap)
+            return position;
+        
+        if (targetBase == null)
+        {
+            var size = Base.cellSize;
+            return new Vector3(Mathf.RoundToInt(position.x / size.x) * size.x, position.y, Mathf.RoundToInt(position.z / size.z) * size.z);
+        }
+        
+        var cell = targetBase.WorldToGrid(position);
+        var snapped = SnapToCell(cell, targetBase);
+        return targetBase.GridToWorld(snapped);
+    }
+    
+    private static readonly Dictionary<Int3, int> Score = new();
+    
+    private static Int3 SnapToCell(Int3 cell, Base targetBase)
+    {
+        var cellType = Base.CellType.Foundation;
+        Int3 @int = Base.CellSize[(uint)cellType];
+        Score.Clear();
+        Int3 adjacent = Base.GetAdjacent(cell, Base.Direction.Above);
+        int value;
+        foreach (Int3 item in Int3.Range(adjacent, adjacent + @int - 1))
+        {
+            if (targetBase.GetCell(item) == cellType)
+            {
+                Int3 key = targetBase.NormalizeCell(item);
+                if (Score.TryGetValue(key, out value))
+                {
+                    Score[key] = value + 1;
+                }
+                else
+                {
+                    Score.Add(key, 1);
+                }
+            }
+        }
+        Int3 adjacent2 = Base.GetAdjacent(cell, Base.Direction.Below);
+        foreach (Int3 item2 in Int3.Range(adjacent2, adjacent2 + @int - 1))
+        {
+            if (targetBase.GetCell(item2) == cellType)
+            {
+                Int3 key2 = targetBase.NormalizeCell(item2);
+                if (Score.TryGetValue(key2, out value))
+                {
+                    Score[key2] = value + 1;
+                }
+                else
+                {
+                    Score.Add(key2, 1);
+                }
+            }
+        }
+        int num = 0;
+        foreach (KeyValuePair<Int3, int> item3 in Score)
+        {
+            if (item3.Value > num)
+            {
+                num = item3.Value;
+                cell.x = item3.Key.x;
+                cell.z = item3.Key.z;
+            }
+        }
+        return cell;
     }
 }

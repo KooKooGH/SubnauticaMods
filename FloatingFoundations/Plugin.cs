@@ -16,10 +16,17 @@ public class Plugin : BaseUnityPlugin
     public new static ManualLogSource Logger { get; private set; }
 
     private static Assembly Assembly { get; } = Assembly.GetExecutingAssembly();
-    
+
     internal static AssetBundle Bundle { get; private set; }
 
     private static bool _loadedAssets;
+
+    internal static GameInput.Button SnapToBasesButton { get; } =
+        EnumHandler.AddEntry<GameInput.Button>("SnapFloatingFoundation")
+            .CreateInput()
+            .WithKeyboardBinding(GameInputHandler.Paths.Keyboard.F)
+            .WithControllerBinding(GameInputHandler.Paths.Gamepad.DpadUp)
+            .AvoidConflicts();
 
     private void Awake()
     {
@@ -27,7 +34,7 @@ public class Plugin : BaseUnityPlugin
         Logger = base.Logger;
 
         LanguageHandler.RegisterLocalizationFolder();
-        
+
         WaitScreenHandler.RegisterEarlyLoadTask(PluginInfo.PLUGIN_NAME, RegisterMod);
 
         // register harmony patches, if there are any
@@ -38,10 +45,10 @@ public class Plugin : BaseUnityPlugin
     private static void RegisterMod(WaitScreenHandler.WaitScreenTask task)
     {
         if (_loadedAssets) return;
-        
+
         Bundle = AssetBundleLoadingUtils.LoadFromAssetsFolder(Assembly, "floatingfoundation");
         FloatingFoundation.Register();
-        
+
         _loadedAssets = true;
     }
 }
