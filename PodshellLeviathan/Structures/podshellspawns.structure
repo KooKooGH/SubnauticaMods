@@ -439,6 +439,50 @@
       },
       "cellLevel": 3,
       "priority": 0
+    },
+    {
+      "classId": "PodshellLeviathanJuvenile",
+      "id": "0e3fd306-490d-45b4-a5fb-d695f136df3b",
+      "position": {
+        "x": -24.8862038,
+        "y": -153.064331,
+        "z": 1075.06812
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 1.0
+      },
+      "scale": {
+        "x": 0.9916377,
+        "y": 0.9916377,
+        "z": 0.9916377
+      },
+      "cellLevel": 2,
+      "priority": 0
+    },
+    {
+      "classId": "PodshellLeviathanJuvenile",
+      "id": "9032b33d-3e6e-420b-a85b-460fce7a06e8",
+      "position": {
+        "x": 125.932007,
+        "y": -130.651779,
+        "z": 1174.9873
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 1.0
+      },
+      "scale": {
+        "x": 0.996046245,
+        "y": 0.996046245,
+        "z": 0.996046245
+      },
+      "cellLevel": 2,
+      "priority": 0
     }
   ],
   "Metadata": {
