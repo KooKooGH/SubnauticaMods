@@ -72,6 +72,7 @@ public static class FloatingFoundation
         var seamothProxy = seamothRef.GetComponentInChildren<WaterClipProxy>();
         
         var clipProxy = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        clipProxy.name = "WaterClipProxy";
         clipProxy.transform.parent = prefab.transform;
         clipProxy.transform.localScale = new Vector3(9.8f, 1, 9.8f);
         clipProxy.transform.localPosition = new Vector3(0, 0.476f, 0);
