@@ -57,7 +57,7 @@ public class PodshellLeviathanPrefab : CreatureAsset
         template.AvoidObstaclesData =
             new AvoidObstaclesData(AvoidObstaclesPriority, StandardSwimVelocity, true, 30, 30);
         template.AvoidTerrainData =
-            new AvoidTerrainData(AvoidTerrainPriority, StandardSwimVelocity, 25, 25);
+            new AvoidTerrainData(AvoidTerrainPriority, StandardSwimVelocity, 17, 17);
         template.StayAtLeashData = new StayAtLeashData(StayAtLeashPriority, StandardSwimVelocity, 140f);
         template.CanBeInfected = false;
         template.SizeDistribution = new AnimationCurve(new Keyframe(0f, 0.7f), new Keyframe(1f, 1f));
