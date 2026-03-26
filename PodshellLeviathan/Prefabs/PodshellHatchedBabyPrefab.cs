@@ -61,6 +61,7 @@ public class PodshellHatchedBabyPrefab : PodshellLeviathanBabyPrefab
 
         var hitGlass = prefab.AddComponent<BabyHitGlassSound>();
         hitGlass.sound = ModAudio.PodshellBabyHitHead;
+        hitGlass.soundAtSurface = ModAudio.PodshellBabyHitHeadSurface;
         hitGlass.waterPark = waterParkCreature;
         hitGlass.rb = components.Rigidbody;
 
