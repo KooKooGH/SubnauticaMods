@@ -48,6 +48,7 @@ public static class FloatingFoundation
         var foundationModel = Object.Instantiate(baseFoundationPiece, prefab.transform);
         foundationModel.transform.localPosition = new Vector3(0, -1, 0);
         foundationModel.transform.localRotation = Quaternion.identity;
+        Object.DestroyImmediate(foundationModel.GetComponentInChildren<TechTag>());
 
         var pillowPrefab = Plugin.Bundle.LoadAsset<GameObject>("FoundationPillowsPrefab");
         
