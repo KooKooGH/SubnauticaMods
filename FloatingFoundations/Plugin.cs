@@ -2,6 +2,7 @@
 using BepInEx;
 using BepInEx.Logging;
 using FloatingFoundations.Buildables;
+using FloatingFoundations.StructureHandling;
 using HarmonyLib;
 using Nautilus.Handlers;
 using Nautilus.Utility;
@@ -48,6 +49,8 @@ public class Plugin : BaseUnityPlugin
 
         Bundle = AssetBundleLoadingUtils.LoadFromAssetsFolder(Assembly, "floatingfoundation");
         FloatingFoundation.Register();
+        
+        StructureLoading.RegisterStructures(StructureLoading.GetStructuresFolderPath(Assembly));
 
         _loadedAssets = true;
     }
