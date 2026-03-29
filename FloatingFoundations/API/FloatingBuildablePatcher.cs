@@ -8,6 +8,16 @@ namespace FloatingFoundations.API;
 [HarmonyPatch]
 public static class FloatingBuildablePatcher
 {
+    private const float BaseDetectionRange = 60;
+    
+    internal static void RegisterManualPatches(Harmony harmony)
+    {
+        var original = AccessTools.Method(typeof(Builder), nameof(Builder.HasComponent),
+            new[] { typeof(GameObject) }, new[] { typeof(Constructable) });
+        var postfix = new HarmonyMethod(typeof(FloatingBuildablePatcher), nameof(AllowConstructablesOnFloatingFoundations));
+        harmony.Patch(original, postfix: postfix);
+    }
+    
     [HarmonyPostfix]
     [HarmonyPatch(typeof(Builder), nameof(Builder.CheckAsSubModule))]
     public static void AllowPlacementOnWaterSurfacePostfix(ref bool __result)
@@ -33,6 +43,16 @@ public static class FloatingBuildablePatcher
         }
     }
 
+    // postfix of Builder.HasComponent<Constructable>
+    private static void AllowConstructablesOnFloatingFoundations(GameObject go, ref bool __result)
+    {
+        var techType = CraftData.GetTechType(go);
+        if (FloatingBuildableUtils.FloatingTechTypes.Contains(techType))
+        {
+            __result = false;
+        }
+    }
+
     private static void GetPlacedPosition(float seaLevel, ref Vector3 position, ref Quaternion rotation)
     {
         var aimTransform = Builder.GetAimTransform();
@@ -43,7 +63,8 @@ public static class FloatingBuildablePatcher
             return;
         }
         var finalPosition = position;
-        var targetBase = BaseGhost.FindBase(MainCamera.camera.transform);
+        var targetBase = BaseGhost.FindBase(MainCamera.camera.transform, BaseDetectionRange);
+        if (targetBase == null) targetBase = CheckForBasesLazy(MainCamera.camera.transform.position);
         finalPosition = SnapPlacement(new Vector3(finalPosition.x, seaLevel, finalPosition.z), targetBase);
         position = new Vector3(finalPosition.x, seaLevel, finalPosition.z);
         if (GameInput.GetButtonHeld(Plugin.SnapToBasesButton))
@@ -135,5 +156,67 @@ public static class FloatingBuildablePatcher
             }
         }
         return cell;
+    }
+
+    private static readonly List<Base> BaseSearchCache = new();
+    private static float _timeSearchBasesAgain;
+    private const float BaseSearchInterval = 5f;
+    private const int MaxGlobalObjectsToScan = 1000;
+    
+    private static Base CheckForBasesLazy(Vector3 fromPosition)
+    {
+        if (Time.time > _timeSearchBasesAgain)
+        {
+            _timeSearchBasesAgain = Time.time + BaseSearchInterval;
+            BaseSearchCache.Clear();
+            var globalRoot = LargeWorld.main.streamer.globalRoot;
+            if (globalRoot == null) return null;
+            int i = 0;
+            foreach (Transform child in globalRoot.transform)
+            {
+                i++;
+
+                if (i > MaxGlobalObjectsToScan)
+                    break;
+
+                if (child.gameObject.name != "Base(Clone)")
+                {
+                    continue;
+                }
+
+                var baseComponent = child.GetComponent<Base>();
+                if (baseComponent != null)
+                {
+                    BaseSearchCache.Add(baseComponent);
+                }
+            }
+        }
+
+        if (BaseSearchCache.Count == 0)
+            return null;
+        
+        return GetBestBaseChoice(fromPosition);
+    }
+
+    private static Base GetBestBaseChoice(Vector3 position)
+    {
+        float maxDistanceSqr = BaseDetectionRange * BaseDetectionRange;
+        Base best = null;
+        foreach (var @base in BaseSearchCache)
+        {
+            if (@base == null)
+            {
+                continue;
+            }
+
+            var distance = Vector3.SqrMagnitude(position - @base.GetClosestPoint(position));
+            if (distance < maxDistanceSqr)
+            {
+                maxDistanceSqr = distance;
+                best = @base;
+            }
+        }
+
+        return best;
     }
 }

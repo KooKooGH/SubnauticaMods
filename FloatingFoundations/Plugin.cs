@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using BepInEx;
 using BepInEx.Logging;
+using FloatingFoundations.API;
 using FloatingFoundations.Buildables;
 using FloatingFoundations.StructureHandling;
 using HarmonyLib;
@@ -39,7 +40,8 @@ public class Plugin : BaseUnityPlugin
         WaitScreenHandler.RegisterEarlyLoadTask(PluginInfo.PLUGIN_NAME, RegisterMod);
 
         // register harmony patches, if there are any
-        Harmony.CreateAndPatchAll(Assembly, $"{PluginInfo.PLUGIN_GUID}");
+        var harmony = Harmony.CreateAndPatchAll(Assembly, $"{PluginInfo.PLUGIN_GUID}");
+        FloatingBuildablePatcher.RegisterManualPatches(harmony);
         Logger.LogInfo($"Plugin {PluginInfo.PLUGIN_GUID} is loaded!");
     }
 
