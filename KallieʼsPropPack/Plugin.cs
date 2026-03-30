@@ -7,6 +7,7 @@ using KallieʼsPropPack.Prefabs.Corpses;
 using KallieʼsPropPack.Prefabs.Grasses;
 using KallieʼsPropPack.Prefabs.Ice;
 using KallieʼsPropPack.Prefabs.Lab;
+using KallieʼsPropPack.Prefabs.Lights;
 using KallieʼsPropPack.Prefabs.Plants;
 using KallieʼsPropPack.Prefabs.Precursor;
 using KallieʼsPropPack.Prefabs.SingleCellLandscape;
@@ -206,8 +207,26 @@ public class Plugin : BaseUnityPlugin
         {
             grass.Register();
         }
+        
+        // Register light entities
+        var coloredLights = new[]
+        {
+            new CustomLight("RedLight")
+                .WithColor(Color.red)
+                .WithIntensity(1.5f)
+                .WithRange(20f),
+            new CustomLight("BlueLight")
+                .WithColor(Color.blue)
+                .WithIntensity(2.0f)
+                .WithRange(15f)
+        };
 
-        // Register single cell landscape entities
+        foreach (var light in coloredLights)
+        {
+            light.Register();
+        }
+
+    // Register single cell landscape entities
 
         new SingleCellGround("Kallies_SingleCellGround", LargeWorldEntity.CellLevel.Medium, false).Register();
         new SingleCellGround("Kallies_SingleCellGround_LoadFar", LargeWorldEntity.CellLevel.Far, false).Register();
