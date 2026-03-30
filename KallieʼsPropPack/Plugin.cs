@@ -214,11 +214,23 @@ public class Plugin : BaseUnityPlugin
             new CustomLight("RedLight")
                 .WithColor(Color.red)
                 .WithIntensity(1.5f)
-                .WithRange(20f),
+                .WithRange(15f),
             new CustomLight("BlueLight")
                 .WithColor(Color.blue)
                 .WithIntensity(2.0f)
-                .WithRange(15f)
+                .WithRange(15f),
+            new CustomLight("GreenLight")
+                .WithColor(Color.green)
+                .WithIntensity(2.0f)
+                .WithRange(15f),
+            new CustomLight("YellowLight")
+                .WithColor(Color.yellow)
+                .WithIntensity(2.0f)
+                .WithRange(15f),
+            new CustomLight("PurpleLight")  
+                .WithColor(Color.magenta)
+                .WithIntensity(2.0f)
+                .WithRange(15f),
         };
 
         foreach (var light in coloredLights)
