@@ -3,6 +3,7 @@ using BepInEx;
 using BepInEx.Logging;
 using FloatingFoundations.API;
 using FloatingFoundations.Buildables;
+using FloatingFoundations.Fragments;
 using FloatingFoundations.StructureHandling;
 using HarmonyLib;
 using Nautilus.Handlers;
@@ -23,8 +24,8 @@ public class Plugin : BaseUnityPlugin
 
     private static bool _loadedAssets;
 
-    internal static GameInput.Button SnapToBasesButton { get; } =
-        EnumHandler.AddEntry<GameInput.Button>("SnapFloatingFoundation")
+    internal static GameInput.Button DisableSnapToBasesButton { get; } =
+        EnumHandler.AddEntry<GameInput.Button>("DontSnapFloatingFoundation")
             .CreateInput()
             .WithKeyboardBinding(GameInputHandler.Paths.Keyboard.F)
             .WithControllerBinding(GameInputHandler.Paths.Gamepad.DpadUp)
@@ -51,6 +52,7 @@ public class Plugin : BaseUnityPlugin
 
         Bundle = AssetBundleLoadingUtils.LoadFromAssetsFolder(Assembly, "floatingfoundation");
         FloatingFoundation.Register();
+        FloatingFoundationFragments.Register();
         
         StructureLoading.RegisterStructures(StructureLoading.GetStructuresFolderPath(Assembly));
 
