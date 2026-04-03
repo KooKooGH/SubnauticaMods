@@ -1,7 +1,8 @@
 {
   "FloatingFoundation": "Floating foundation",
   "Tooltip_FloatingFoundation": "Habitat foundation. Floats on the ocean surface.",
-  "OptionSnapFloatingFoundation": "Hold to snap",
-  "FloatingFoundationSnapHint": "Hold {0} to enable snapping",
-  "FloatingFoundationSnapUnboundHint": "<color=#ADF8FF>Notice</color>: no binding set for snapping"
+  "OptionDontSnapFloatingFoundation": "Disable snapping",
+  "FloatingFoundationDontSnapHint": "Hold {0} to disable snapping",
+  "FloatingFoundationDontSnapUnboundHint": "<color=#ADF8FF>Notice</color>: no binding set to disable snapping",
+  "FloatingFoundationFragment": "Floating foundation fragment"
 }

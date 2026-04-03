@@ -28,6 +28,7 @@ public class SingleCellTentacle
     private IEnumerator CreatePrefab(IOut<GameObject> result)
     {
         var prefab = Object.Instantiate(Plugin.Bundle.LoadAsset<GameObject>(_prefabName));
+        prefab.SetActive(false);
         PrefabUtils.AddBasicComponents(prefab, Info.ClassID, Info.TechType, LargeWorldEntity.CellLevel.VeryFar);
         MaterialUtils.ApplySNShaders(prefab, 5f, 0.2f, 1, new WavingEffectModifier(1)
             {

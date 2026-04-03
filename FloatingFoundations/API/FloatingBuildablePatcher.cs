@@ -31,13 +31,13 @@ public static class FloatingBuildablePatcher
 
         if (snapToWaterSurface)
         {
-            if (string.IsNullOrEmpty(GameInput.GetBinding(GameInput.PrimaryDevice, Plugin.SnapToBasesButton, GameInput.BindingSet.Primary)))
+            if (string.IsNullOrEmpty(GameInput.GetBinding(GameInput.PrimaryDevice, Plugin.DisableSnapToBasesButton, GameInput.BindingSet.Primary)))
             {
-                ErrorMessage.main.AddHint(Language.main.GetFormat("FloatingFoundationSnapUnboundHint"));
+                ErrorMessage.main.AddHint(Language.main.GetFormat("FloatingFoundationDontSnapUnboundHint"));
             }
             else
             {
-                ErrorMessage.main.AddHint(LanguageCache.GetButtonFormat("FloatingFoundationSnapHint", Plugin.SnapToBasesButton));
+                ErrorMessage.main.AddHint(LanguageCache.GetButtonFormat("FloatingFoundationDontSnapHint", Plugin.DisableSnapToBasesButton));
             }
             __result = true;
         }
@@ -67,7 +67,7 @@ public static class FloatingBuildablePatcher
         if (targetBase == null) targetBase = CheckForBasesLazy(MainCamera.camera.transform.position);
         finalPosition = SnapPlacement(new Vector3(finalPosition.x, seaLevel, finalPosition.z), targetBase);
         position = new Vector3(finalPosition.x, seaLevel, finalPosition.z);
-        if (GameInput.GetButtonHeld(Plugin.SnapToBasesButton))
+        if (!GameInput.GetButtonHeld(Plugin.DisableSnapToBasesButton))
         {
             if (targetBase != null)
             {
@@ -90,7 +90,7 @@ public static class FloatingBuildablePatcher
     
     private static Vector3 SnapPlacement(Vector3 position, Base targetBase)
     {
-        bool snap = GameInput.GetButtonHeld(Plugin.SnapToBasesButton);
+        bool snap = !GameInput.GetButtonHeld(Plugin.DisableSnapToBasesButton);
         if (!snap)
             return position;
         

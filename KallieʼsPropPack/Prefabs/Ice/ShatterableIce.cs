@@ -29,6 +29,7 @@ public class ShatterableIce
     private IEnumerator GetGameObject(IOut<GameObject> result)
     {
         var prefab = Object.Instantiate(Plugin.Bundle.LoadAsset<GameObject>(PrefabName));
+        prefab.SetActive(false);
         PrefabUtils.AddBasicComponents(prefab, Info.ClassID, Info.TechType, LargeWorldEntity.CellLevel.Medium);
         var solidParent = prefab.transform.Find("Solid");
         var shatteredParent = prefab.transform.Find("Shattered");

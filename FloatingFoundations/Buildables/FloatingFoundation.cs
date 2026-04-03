@@ -1,11 +1,10 @@
-using System;
 using System.Collections;
-using System.Diagnostics.CodeAnalysis;
 using FloatingFoundations.API;
 using FloatingFoundations.MonoBehaviours;
 using Nautilus.Assets;
 using Nautilus.Assets.Gadgets;
 using Nautilus.Crafting;
+using Nautilus.Handlers;
 using Nautilus.Utility;
 using UnityEngine;
 using UWE;
@@ -26,7 +25,10 @@ public static class FloatingFoundation
             new Ingredient(TechType.Silicone, 1),
             new Ingredient(TechType.Aerogel, 1)
             ));
-        prefab.SetPdaGroupCategoryAfter(TechGroup.BasePieces, TechCategory.BasePiece, TechType.BaseFoundation);
+        prefab.SetPdaGroupCategoryAfter(TechGroup.BasePieces, TechCategory.BasePiece, TechType.BaseFoundation)
+            .WithAnalysisTech(Plugin.Bundle.LoadAsset<Sprite>("FloatingFoundationPopup"),
+                KnownTechHandler.DefaultUnlockData.BlueprintUnlockSound,
+                KnownTechHandler.DefaultUnlockData.BlueprintUnlockMessage);
         prefab.Register();
         FloatingBuildableUtils.RegisterBuildableAsFloating(Info.TechType, -0.17f);
     }
@@ -100,43 +102,5 @@ public static class FloatingFoundation
         Object.DestroyImmediate(originalCollider);
 
         result.Set(prefab);
-    }
-
-    private class FixClipProxyLayer : MonoBehaviour, IConstructable
-    {
-        public GameObject clipProxy;
-        
-        private void Start()
-        {
-            FixLayer();
-        }
-
-        private void FixLayer()
-        {
-            clipProxy.layer = LayerID.BaseClipProxy;
-        }
-
-        public bool IsDeconstructionObstacle()
-        {
-            return false;
-        }
-
-        public bool CanDeconstruct([UnscopedRef] out string reason)
-        {
-            reason = null;
-            return true;
-        }
-
-        public void OnConstructedChanged(bool constructed)
-        {
-            FixLayer();
-            StartCoroutine(FixLayerNextFrame());
-        }
-
-        private IEnumerator FixLayerNextFrame()
-        {
-            yield return null;
-            FixLayer();
-        }
     }
 }
