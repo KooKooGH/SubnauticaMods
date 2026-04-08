@@ -45,28 +45,6 @@
       "priority": 0
     },
     {
-      "classId": "PodshellLeviathanEgg",
-      "id": "b839cea4-dd8d-489b-b658-22d368be8775",
-      "position": {
-        "x": 749.2973,
-        "y": -388.7362,
-        "z": 1234.79138
-      },
-      "rotation": {
-        "x": 0.0240353122,
-        "y": 0.03249962,
-        "z": 0.594126761,
-        "w": 0.8033552
-      },
-      "scale": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
-      },
-      "cellLevel": 1,
-      "priority": 0
-    },
-    {
       "classId": "KalliesReef_Seaweed",
       "id": "e9c13096-28e4-492c-b347-f2f476f46bec",
       "position": {
