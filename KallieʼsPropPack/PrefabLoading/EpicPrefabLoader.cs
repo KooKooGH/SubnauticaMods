@@ -47,7 +47,11 @@ public class EpicPrefabLoader
                     var prefix = data.prefix + family.prefix;
                     var postfix = family.postfix + data.postfix;
                     var classId = prefix + prefabName + variant?.postfix + postfix;
-                    var techType = EnumHandler.AddEntry<TechType>(classId);
+                    TechType techType = TechType.None;
+                    if (!data.registerWithNoTechType)
+                    {
+                        techType = EnumHandler.AddEntry<TechType>(classId);
+                    }
                     var prefabFileName = string.IsNullOrEmpty(data.customFolderPath)
                         ? classId + "Prefab"
                         : data.customFolderPath + "/" + classId;

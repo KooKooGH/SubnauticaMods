@@ -11,6 +11,7 @@ public class LoadedPrefabRegistrationData
     public string prefix;
     public string postfix;
     public string customFolderPath;
+    public bool registerWithNoTechType;
 
     public PrefabFamily[] families;
 
