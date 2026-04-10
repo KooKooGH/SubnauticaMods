@@ -3,7 +3,7 @@ using Nautilus.Assets.PrefabTemplates;
 using Nautilus.Handlers;
 using UnityEngine;
 
-namespace KallieʼsPropPack.Prefabs.Plants;
+namespace KallieʼsPropPack.Prefabs.Kelp;
 
 public class KelpRoot
 {
@@ -12,7 +12,8 @@ public class KelpRoot
 
     public KelpRoot(string classId, string originalClassId)
     {
-        Info = PrefabInfo.WithTechType(classId);
+        Info = PrefabInfo.WithTechType(classId)
+            .WithFileName("KallieʼsPropPack/Kelp/" + classId);
         OriginalClassId = originalClassId;
     }
 

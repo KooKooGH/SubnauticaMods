@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using KallieʼsPropPack.MaterialModifiers;
+using KallieʼsPropPack.MonoBehaviours;
 using KallieʼsPropPack.PrefabLoading;
 using Nautilus.Utility;
 using Nautilus.Utility.MaterialModifiers;
@@ -38,6 +39,13 @@ public class IceFactory : IEpicPrefabFactory
         {
             collider.gameObject.layer = LayerID.TerrainCollider;
         }
+
+        prefab.AddComponent<DestroyIfIdMatches>().ids = new[]
+        {
+            "f5cb0a00-ed94-4201-a06f-bbeb8f04527b",
+            "051d61a5-c84b-4533-b067-f2c71718b60d",
+            "dc83cb6f-adbb-49b0-b949-20f6e80e3011"
+        };
         
         yield break;
     }

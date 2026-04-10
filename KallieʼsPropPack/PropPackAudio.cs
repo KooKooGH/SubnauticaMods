@@ -16,6 +16,7 @@ public static class PropPackAudio
     {
         RegisterAmbience("SCL_Ambience", "scl ambiance");
         RegisterAmbience("FrozenSCL_Ambience", "FrozenSclAmbience");
+        RegisterAmbience("LushCaveAmbience", "LushCaveAmbience");
     }
 
     private static void RegisterAmbience(string id, string clipName, float fadeOutDuration = 2f,

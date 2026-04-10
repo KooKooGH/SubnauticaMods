@@ -6,8 +6,8 @@ using KallieʼsPropPack.PrefabLoading;
 using KallieʼsPropPack.Prefabs.Corpses;
 using KallieʼsPropPack.Prefabs.Grasses;
 using KallieʼsPropPack.Prefabs.Ice;
+using KallieʼsPropPack.Prefabs.Kelp;
 using KallieʼsPropPack.Prefabs.Lab;
-using KallieʼsPropPack.Prefabs.Plants;
 using KallieʼsPropPack.Prefabs.Precursor;
 using KallieʼsPropPack.Prefabs.SingleCellLandscape;
 using KallieʼsPropPack.Prefabs.Trees;
@@ -84,7 +84,31 @@ public class Plugin : BaseUnityPlugin
             var kelpRootPrefab = new KelpRoot(kelpRootData.classId, kelpRootData.originalClassId);
             kelpRootPrefab.Register();
         }
+        
+        HangingCreepvineSeedCluster.Register();
+        KelpLights.Register();
+        
+        var lushCaveBiomeSettings = BiomeUtils.CreateBiomeSettings(new Vector3(17, 14, 8), 0.4f,
+            new Color(1f, 1, 1, 1), 1.3f, new Color(0.3f, 0.4f, 0.3f),
+            0.3f, 25, 0, 1f, 27f);
+        BiomeHandler.RegisterBiome("lushcave", lushCaveBiomeSettings,
+            new BiomeHandler.SkyReference("SkyKelpForest"));
+        var lushCaveBiomePrefab = new CustomPrefab(PrefabInfo.WithTechType("LushCaveVolume"));
+        var lushCaveTemplate = new AtmosphereVolumeTemplate(lushCaveBiomePrefab.Info,
+            AtmosphereVolumeTemplate.VolumeShape.Sphere, "lushcave", 25);
+        BiomeHandler.AddBiomeAmbience("lushcave", AudioUtils.GetFmodAsset("LushCaveAmbience"),
+            FMODGameParams.InteriorState.OnlyOutside);
+        lushCaveBiomePrefab.SetGameObject(lushCaveTemplate);
+        lushCaveBiomePrefab.Register();
+        
+        var lushCaveBrineSettings = BiomeUtils.CreateBiomeSettings(new Vector3(17, 14, 8), 2f,
+            new Color(1f, 1, 1, 1), 3f, new Color(0.3f, 0.6f, 0.6f),
+            1f, 2, 0, 2f, 24f);
+        BiomeHandler.RegisterBiome("lushcave_brine", lushCaveBrineSettings,
+            new BiomeHandler.SkyReference("SkyKelpForest"));
 
+        new LushCaveBrine("LushCaveBrine",
+            "d931cce0-b6b3-4f70-aa08-e1ed5ef12b29", "KallieʼsPropPack/Kelp").Register();
         // Register grasses
 
         const string coralGrassPrefix = "Kallie_Grass_CoralGrass_";
