@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using KallieʼsPropPack.PrefabLoading;
+using Nautilus.Utility;
 using Nautilus.Utility.MaterialModifiers;
 using UnityEngine;
 
@@ -13,5 +14,14 @@ public class CaveRockFactory : IEpicPrefabFactory
         yield break;
     }
 
-    public MaterialModifier[] MaterialModifiers { get; } = Array.Empty<MaterialModifier>();
+    public MaterialModifier[] MaterialModifiers { get; } = {new CaveRockModifier()};
+
+    private class CaveRockModifier : MaterialModifier
+    {
+        public override void EditMaterial(Material material, Renderer renderer, int materialIndex, MaterialUtils.MaterialType materialType)
+        {
+            material.color = Color.gray;
+            material.SetColor("_SpecColor", Color.gray);
+        }
+    }
 }

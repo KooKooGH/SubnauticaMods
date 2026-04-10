@@ -92,7 +92,7 @@ public class Plugin : BaseUnityPlugin
             new Color(1f, 1, 1, 1), 1.3f, new Color(0.3f, 0.4f, 0.3f),
             0.3f, 25, 0, 1f, 27f);
         BiomeHandler.RegisterBiome("lushcave", lushCaveBiomeSettings,
-            new BiomeHandler.SkyReference("SkyKelpForest"));
+            new BiomeHandler.SkyReference("SkyMushroomForestCave"));
         var lushCaveBiomePrefab = new CustomPrefab(PrefabInfo.WithTechType("LushCaveVolume"));
         var lushCaveTemplate = new AtmosphereVolumeTemplate(lushCaveBiomePrefab.Info,
             AtmosphereVolumeTemplate.VolumeShape.Sphere, "lushcave", 25);
@@ -105,7 +105,7 @@ public class Plugin : BaseUnityPlugin
             new Color(1f, 1, 1, 1), 3f, new Color(0.3f, 0.6f, 0.6f),
             1f, 2, 0, 2f, 24f);
         BiomeHandler.RegisterBiome("lushcave_brine", lushCaveBrineSettings,
-            new BiomeHandler.SkyReference("SkyKelpForest"));
+            new BiomeHandler.SkyReference("SkyMushroomForestCave"));
 
         new LushCaveBrine("LushCaveBrine",
             "d931cce0-b6b3-4f70-aa08-e1ed5ef12b29", "KallieʼsPropPack/Kelp").Register();
@@ -380,5 +380,10 @@ public class Plugin : BaseUnityPlugin
         
         prefabLoader.LoadPrefabs(JsonConvert.DeserializeObject<LoadedPrefabRegistrationData>(
             Bundle.LoadAsset<TextAsset>("ShatteredArchitectPrefabs").text));
+        
+        // Register cave entities
+        
+        prefabLoader.LoadPrefabs(JsonConvert.DeserializeObject<LoadedPrefabRegistrationData>(
+            Bundle.LoadAsset<TextAsset>("CavePrefabs").text));
     }
 }
