@@ -385,5 +385,10 @@ public class Plugin : BaseUnityPlugin
         
         prefabLoader.LoadPrefabs(JsonConvert.DeserializeObject<LoadedPrefabRegistrationData>(
             Bundle.LoadAsset<TextAsset>("CavePrefabs").text));
+        
+        // Register wiring kit entities
+        
+        prefabLoader.LoadPrefabs(JsonConvert.DeserializeObject<LoadedPrefabRegistrationData>(
+            Bundle.LoadAsset<TextAsset>("WiringKitPrefabs").text));
     }
 }

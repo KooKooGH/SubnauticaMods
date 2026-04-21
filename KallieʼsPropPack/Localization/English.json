@@ -186,5 +186,14 @@
   "KalliesReef_BlueCoralBush_Group1": "BlueCoralBush_Group1",
   "KalliesReef_BlueCoralBush_Group2": "BlueCoralBush_Group2",
   "KalliesReef_BlueCoralBush_Group3": "BlueCoralBush_Group3",
-  "KalliesReef_NeptunesAnemone_Group1": "NeptunesAnemone_Group1"
+  "KalliesReef_NeptunesAnemone_Group1": "NeptunesAnemone_Group1",
+  "WiringKit_Multimeter": "Multimeter (wiring kit)",
+  "WiringKit_O_Ring": "O-ring (wiring kit)",
+  "WiringKit_Pliers": "Pliers (wiring kit)",
+  "WiringKit_RingTerminal": "Ring terminal (wiring kit)",
+  "WiringKit_SignalProcessor500": "Signal Processor 500 (wiring kit)",
+  "WiringKit_Wire_DataCable": "Data cable (wiring kit)",
+  "WiringKit_Wire_OpticCable": "Optic cable (wiring kit)",
+  "WiringKit_WirelessConnector": "Wireless connector (wiring kit)",
+  "WiringKit_WireTerminal": "Wire terminal (wiring kit)"
 }
