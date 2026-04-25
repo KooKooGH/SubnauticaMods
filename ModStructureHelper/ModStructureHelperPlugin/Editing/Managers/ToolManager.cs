@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using ModStructureHelperPlugin.Editing.Tools;
 using ModStructureHelperPlugin.Handle;
 using ModStructureHelperPlugin.UI;
@@ -40,7 +40,7 @@ public class ToolManager : MonoBehaviour
         foreach (var tool in tools)
         {
             if (tool.Type != ToolType.BrowseEntities && entityBrowserOpen) continue;
-            if (GameInput.GetButtonDown(GetButtonForTool(tool.Type)) && CheckToolModifiersPressed(tool))
+            if (GetButtonForTool(tool.Type).GetKeyDown() && CheckToolModifiersPressed(tool))
             {
                 tool.OnToolButtonPressed();
             }
@@ -52,26 +52,26 @@ public class ToolManager : MonoBehaviour
     {
         if (tool.RequiresModifierHeld && tool.RequiresAlternateModifierHeld)
         {
-            return ModifierFixUtils.GetModifierHeld(StructureHelperInput.ToolHotkeyModifier) &&
-                   ModifierFixUtils.GetModifierHeld(StructureHelperInput.AltToolHotkeyModifier);
+            return StructureHelperInput.ToolHotkeyModifier.GetKey() &&
+                   StructureHelperInput.AltToolHotkeyModifier.GetKey();
         }
         
         if (tool.RequiresModifierHeld)
         {
-            return ModifierFixUtils.GetModifierHeld(StructureHelperInput.ToolHotkeyModifier);
+            return StructureHelperInput.ToolHotkeyModifier.GetKey();
         }
 
         if (tool.RequiresAlternateModifierHeld)
         {
-            return ModifierFixUtils.GetModifierHeld(StructureHelperInput.AltToolHotkeyModifier);
+            return StructureHelperInput.AltToolHotkeyModifier.GetKey();
         }
 
-        return !ModifierFixUtils.GetModifierHeld(StructureHelperInput.ToolHotkeyModifier);
+        return !StructureHelperInput.ToolHotkeyModifier.GetKey();
     }
     
     public ToolBase GetTool(ToolType type) => (from tool in tools where tool.Type == type select tool).FirstOrDefault();
 
-    public GameInput.Button GetButtonForTool(ToolType tool)
+    public InputBinding GetButtonForTool(ToolType tool)
     {
         switch (tool)
         {
@@ -109,7 +109,7 @@ public class ToolManager : MonoBehaviour
                 return StructureHelperInput.DeleteBind;
             default:
                 Plugin.Logger.LogWarning($"No keybind implemented for tool '{tool}'!");
-                return GameInput.Button.None;
+                return default;
         }
     }
 }

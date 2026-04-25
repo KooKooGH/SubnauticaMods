@@ -1,4 +1,4 @@
-﻿using ModStructureHelperPlugin.Editing.Managers;
+using ModStructureHelperPlugin.Editing.Managers;
 using ModStructureHelperPlugin.Editing.Tools;
 using ModStructureHelperPlugin.Handle.Handles;
 using ModStructureHelperPlugin.Handle.Handles.Position;
@@ -170,17 +170,17 @@ public class RuntimeTransformHandle : MonoBehaviour
 
     public static bool GetPointerDown()
     {
-        return GameInput.GetButtonDown(StructureHelperInput.Interact);
+        return StructureHelperInput.Interact.GetKeyDown();
     }
 
     public static bool PointerIsDown()
     {
-        return GameInput.GetButtonHeld(StructureHelperInput.Interact);
+        return StructureHelperInput.Interact.GetKey();
     }
 
     public static bool GetPointerUp()
     {
-        return GameInput.GetButtonUp(StructureHelperInput.Interact);
+        return StructureHelperInput.Interact.GetKeyUp();
     }
 
     public static Vector3 GetMousePosition()

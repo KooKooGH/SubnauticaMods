@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>net472</TargetFramework>
@@ -13,14 +13,14 @@
 
     <ItemGroup>
       <Reference Include="Newtonsoft.Json">
-        <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Subnautica\Subnautica_Data\Managed\Newtonsoft.Json.dll</HintPath>
+        <HintPath>F:\SteamLibrary\steamapps\common\SubnauticaZero\SubnauticaZero_Data\Managed\Newtonsoft.Json.dll</HintPath>
       </Reference>
     </ItemGroup>
 
     <Import Project="..\Directories.targets" />
 
     <PropertyGroup>
-        <SubnauticaPackagesDir>Packages/Subnautica</SubnauticaPackagesDir>
+        <BelowZeroPackagesDir>Packages/BelowZero</BelowZeroPackagesDir>
         <PluginsDir>$(GameDir)\BepInEx\plugins</PluginsDir>
     </PropertyGroup>
 
@@ -29,7 +29,7 @@
     </Target>
 
     <Target Name="CopyToThunderKitFolder" AfterTargets="Build">
-        <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(UnityProjectDir)\$(SubnauticaPackagesDir)"/>
+        <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(UnityProjectDir)\$(BelowZeroPackagesDir)"/>
     </Target>
 
 </Project>

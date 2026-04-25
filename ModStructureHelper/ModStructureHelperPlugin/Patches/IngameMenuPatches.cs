@@ -1,4 +1,4 @@
-﻿using HarmonyLib;
+using HarmonyLib;
 using ModStructureHelperPlugin.UI;
 using TMPro;
 using UnityEngine;
@@ -16,7 +16,7 @@ public static class IngameMenuPatches
         var buttonLayout = __instance.transform.Find("Main/ButtonLayout");
         var structuresButton = Object.Instantiate(buttonLayout.transform.Find("ButtonBack"), buttonLayout.GetComponent<RectTransform>());
         structuresButton.transform.SetSiblingIndex(structuresButton.parent.Find("ButtonSave").GetSiblingIndex() + 1);
-        structuresButton.GetComponentInChildren<TextMeshProUGUI>().text = $"Edit Structures ({GameInput.FormatButton(StructureHelperInput.ToggleStructureHelperKeyBind)})";
+        structuresButton.GetComponentInChildren<TextMeshProUGUI>().text = $"Edit Structures ({StructureHelperInput.ToggleStructureHelperKeyBind.ToString()})";
         structuresButton.name = "ButtonEditStructures";
         var button = structuresButton.GetComponent<Button>();
         button.onClick = new Button.ButtonClickedEvent();

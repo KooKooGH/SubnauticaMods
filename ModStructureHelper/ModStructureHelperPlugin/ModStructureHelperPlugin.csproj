@@ -21,10 +21,9 @@
         <PackageReference Include="BepInEx.Core" Version="5.4.21"/>
         <PackageReference Include="BepInEx.PluginInfoProps" Version="1.1.0"/>
         <PackageReference Include="UnityEngine.Modules" Version="2019.4.36" IncludeAssets="compile"/>
-        <PackageReference Include="Subnautica.GameLibs" Version="82304.0.0-r.0"/>
+        <PackageReference Include="Subnautica.BelowZero.GameLibs" Version="53115.0.0-r.0"/>
         <PackageReference Include="PolySharp" Version="1.13.1"/>
-        <PackageReference Include="Subnautica.Nautilus" Version="1.*-*" PrivateAssets="all"/>
-        <PackageReference Include="Unity.InputSystem" Version="1.4.1" IncludeAssets="compile" />
+        <PackageReference Include="SubnauticaZero.Nautilus" Version="1.*-*" PrivateAssets="all"/>
     </ItemGroup>
 
     <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
@@ -38,7 +37,7 @@
     <Import Project="..\Directories.targets" />
 
     <PropertyGroup>
-        <SubnauticaPackagesDir>Packages/Subnautica</SubnauticaPackagesDir>
+        <BelowZeroPackagesDir>Packages/BelowZero</BelowZeroPackagesDir>
         <PluginsDir>$(GameDir)\BepInEx\plugins</PluginsDir>
     </PropertyGroup>
 
@@ -47,6 +46,6 @@
     </Target>
     
     <Target Name="CopyToThunderKitFolder" AfterTargets="Build">
-        <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(UnityProjectDir)\$(SubnauticaPackagesDir)"/>
+        <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(UnityProjectDir)\$(BelowZeroPackagesDir)"/>
     </Target>
 </Project>

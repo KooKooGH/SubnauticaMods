@@ -1,4 +1,4 @@
-﻿using ModStructureHelperPlugin.StructureHandling;
+using ModStructureHelperPlugin.StructureHandling;
 using ModStructureHelperPlugin.UI;
 using UnityEngine;
 
@@ -8,14 +8,14 @@ public class InputHandler : MonoBehaviour
 {
     private void Update()
     {
-        if (GameInput.GetButtonDown(StructureHelperInput.ToggleStructureHelperKeyBind))
+        if (StructureHelperInput.ToggleStructureHelperKeyBind.GetKeyDown())
         {
             StructureHelperUI.SetUIEnabled(!StructureHelperUI.IsActive);
         }
 
         if (!StructureHelperUI.main || !StructureHelperUI.main.isActiveAndEnabled) return;
         
-        if (GameInput.GetButtonHeld(StructureHelperInput.SaveHotkeyModifier) && GameInput.GetButtonDown(StructureHelperInput.SaveKeyBind))
+        if (StructureHelperInput.SaveHotkeyModifier.GetKey() && StructureHelperInput.SaveKeyBind.GetKeyDown())
         {
             StructureInstance.TrySave();
         }

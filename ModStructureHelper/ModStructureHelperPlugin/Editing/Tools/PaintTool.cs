@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using ModStructureHelperPlugin.Editing.Managers;
 using ModStructureHelperPlugin.StructureHandling;
 using ModStructureHelperPlugin.UI;
@@ -65,21 +65,21 @@ public class PaintTool : ToolBase
             CreatePreview();
         }
 
-        if (GameInput.GetButtonHeld(StructureHelperInput.BrushRotateLeft))
+        if (StructureHelperInput.BrushRotateLeft.GetKey())
         {
             _rotation -= Time.unscaledDeltaTime / 2f * Plugin.ModConfig.BrushRotateSpeed;
         }
-        else if (GameInput.GetButtonHeld(StructureHelperInput.BrushRotateRight))
+        else if (StructureHelperInput.BrushRotateRight.GetKey())
         {
             _rotation += Time.unscaledDeltaTime / 2f * Plugin.ModConfig.BrushRotateSpeed;
         }
         
         
-        if (GameInput.GetButtonHeld(StructureHelperInput.BrushDecreaseScale))
+        if (StructureHelperInput.BrushDecreaseScale.GetKey())
         {
             _scaleOffset = Mathf.Max(-1f, _scaleOffset - Time.unscaledDeltaTime * Plugin.ModConfig.BrushScaleSpeed);
         }
-        else if (GameInput.GetButtonHeld(StructureHelperInput.BrushIncreaseScale))
+        else if (StructureHelperInput.BrushIncreaseScale.GetKey())
         {
             _scaleOffset = Mathf.Max(-1f, _scaleOffset + Time.unscaledDeltaTime * Plugin.ModConfig.BrushScaleSpeed);
         }
@@ -93,7 +93,7 @@ public class PaintTool : ToolBase
 
         if (!_brushLocationValid) return;
         
-        if (GameInput.GetButtonDown(StructureHelperInput.Interact) && !StructureHelperUI.main.IsCursorHoveringOverExternalWindows)
+        if (StructureHelperInput.Interact.GetKeyDown() && !StructureHelperUI.main.IsCursorHoveringOverExternalWindows)
         {
             var placedObject = Instantiate(_selectedPrefab, _brushPosition, _brushRotation);
             placedObject.SetActive(true);
@@ -134,7 +134,7 @@ public class PaintTool : ToolBase
             ? hit.point
             : MainCamera.camera.transform.position + MainCamera.camera.transform.forward * 10;
         _brushPosition = manager.snappingManager.SnapPlacementPosition(_brushPosition);
-        var surfaceNormal = GameInput.GetButtonHeld(StructureHelperInput.UseGlobalUpNormal) ? Vector3.up : hit.normal;
+        var surfaceNormal = StructureHelperInput.UseGlobalUpNormal.GetKey() ? Vector3.up : hit.normal;
         if (hitSurface)
         {
             if (_upDirection == UpDirection.Z)

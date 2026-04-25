@@ -38,7 +38,7 @@ namespace ModStructureHelperPlugin.Handle.Handles.Scale
             float d = (mouseVector.x + mouseVector.y) * Time.unscaledDeltaTime * 2;
             delta += d;
             var newScale = _startScale + Vector3.Scale(_startScale,_axis) * delta;
-            if (GameInput.GetButtonHeld(StructureHelperInput.ScaleUniform))
+            if (StructureHelperInput.ScaleUniform.GetKey())
             {
                 newScale = Vector3.one * ((newScale.x + newScale.y + newScale.z) / 3);
             }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using ModStructureHelperPlugin.Editing.Managers;
 using ModStructureHelperPlugin.Mono;
 using ModStructureHelperPlugin.StructureHandling;
@@ -112,7 +112,7 @@ public class ToggleSnappingTool : ToolBase
     
     private void Update()
     {
-        _snapBindHeld = GameInput.GetButtonHeld(StructureHelperInput.HoldToSnap);
+        _snapBindHeld = StructureHelperInput.HoldToSnap.GetKey();
         if (!manager.snappingManager.SnappingEnabled && _snapBindHeld)
         {
             EnableSnapping();
@@ -153,7 +153,7 @@ public class ToggleSnappingTool : ToolBase
     
     protected override string GetBindString()
     {
-        var binding = GameInput.FormatButton(StructureHelperInput.HoldToSnap);
+        var binding = StructureHelperInput.HoldToSnap.ToString();
         return base.GetBindString() + $" (or hold {binding})";
     }
 

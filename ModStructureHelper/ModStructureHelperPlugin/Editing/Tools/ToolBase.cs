@@ -1,4 +1,4 @@
-﻿using ModStructureHelperPlugin.Editing.Managers;
+using ModStructureHelperPlugin.Editing.Managers;
 using ModStructureHelperPlugin.UI;
 using TMPro;
 using UnityEngine;
@@ -30,17 +30,17 @@ public abstract class ToolBase : TooltipTarget
     
     protected virtual string GetBindString()
     {
-        var inputName = GameInput.FormatButton(manager.GetButtonForTool(Type));
+        var inputName = manager.GetButtonForTool(Type).ToString();
         var bindString = inputName;
         
         if (RequiresAlternateModifierHeld)
         {
-            bindString = $"{GameInput.FormatButton(StructureHelperInput.AltToolHotkeyModifier)} + " + bindString;
+            bindString = $"{StructureHelperInput.AltToolHotkeyModifier} + " + bindString;
         }
         
         if (RequiresModifierHeld)
         {
-            bindString = $"{GameInput.FormatButton(StructureHelperInput.ToolHotkeyModifier)} + " + bindString;
+            bindString = $"{StructureHelperInput.ToolHotkeyModifier} + " + bindString;
         }
         
         return bindString;

@@ -1,36 +1,22 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 namespace ModStructureHelperPlugin.Utility;
 
 public static class ModifierFixUtils
 {
-    public static bool GetModifierHeld(GameInput.Button button)
+    /// <summary>
+    /// Checks if a modifier key is held. For Alt, checks both LeftAlt and RightAlt.
+    /// </summary>
+    public static bool GetModifierHeld(InputBinding binding)
     {
-        var held = GameInput.GetButtonHeld(button);
+        if (!binding.GetKey()) return false;
         
-        if (held)
+        // Special handling for Alt key - check both left and right
+        if (binding.Key == KeyCode.LeftAlt)
         {
-            var binding = GameInput.GetBinding(GameInput.Device.Keyboard, button, GameInput.BindingSet.Primary);
-            var token = GetKeyToken(binding);
-
-            switch (token.ToLowerInvariant())
-            {
-                case "alt":
-                case "leftalt":
-                    return Input.GetKey(KeyCode.LeftAlt);
-                case "rightalt":
-                    return Input.GetKey(KeyCode.RightAlt);
-                default:
-                    return true;
-            }
+            return Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt);
         }
-
-        return false;
-    }
-    
-    private static string GetKeyToken(string binding)
-    {
-        var slash = binding.LastIndexOf('/');
-        return slash >= 0 ? binding.Substring(slash + 1) : binding;
+        
+        return true;
     }
 }

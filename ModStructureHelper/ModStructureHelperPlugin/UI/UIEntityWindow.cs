@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections;
 using ModStructureHelperPlugin.EntityHandling;
@@ -196,11 +196,11 @@ public class UIEntityWindow : MonoBehaviour
 
     private void Update()
     {
-        if (GameInput.GetButtonDown(StructureHelperInput.GoForward))
+        if (StructureHelperInput.GoForward.GetKeyDown())
         {
-            GoUnback();
+            GoUnback(); 
         }
-        if (GameInput.GetButtonDown(StructureHelperInput.GoBack))
+        if (StructureHelperInput.GoBack.GetKeyDown())
         {
             GoBack();
         }

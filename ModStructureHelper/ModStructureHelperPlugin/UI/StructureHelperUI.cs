@@ -1,4 +1,4 @@
-﻿using ModStructureHelperPlugin.Editing.Managers;
+using ModStructureHelperPlugin.Editing.Managers;
 using ModStructureHelperPlugin.Editing.Tools;
 using UnityEngine;
 using ModStructureHelperPlugin.UI.Menus;
@@ -40,7 +40,7 @@ public class StructureHelperUI : MonoBehaviour
 
     private void Update()
     {
-        if (GameInput.GetButtonDown(GameInput.Button.UIMenu))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             gameObject.SetActive(false);
         }

@@ -1,4 +1,4 @@
-﻿using ModStructureHelperPlugin.Editing.Managers;
+using ModStructureHelperPlugin.Editing.Managers;
 using ModStructureHelperPlugin.StructureHandling;
 using ModStructureHelperPlugin.UI;
 using UnityEngine;
@@ -37,7 +37,7 @@ public class DragAndDropTool : ToolBase
 
     public override void UpdateTool()
     {
-        if (GameInput.GetButtonDown(StructureHelperInput.Interact) && !StructureHelperUI.main.IsCursorHoveringOverExternalWindows)
+        if (StructureHelperInput.Interact.GetKeyDown() && !StructureHelperUI.main.IsCursorHoveringOverExternalWindows)
         {
             var ray = GetRay();
             if (!Physics.Raycast(ray, out var hit, 5000, -1, QueryTriggerInteraction.Ignore)) return;
@@ -48,26 +48,26 @@ public class DragAndDropTool : ToolBase
             // I'm going to regret this hack surely?
             manager.OnToolStateChangedHandler?.Invoke(this, true);
         }
-        if (GameInput.GetButtonUp(StructureHelperInput.Interact))
+        if (StructureHelperInput.Interact.GetKeyUp())
         {
             SetCurrentlySelected(null);
             manager.OnToolStateChangedHandler?.Invoke(this, true);
         }
-        if (GameInput.GetButtonHeld(StructureHelperInput.BrushRotateLeft))
+        if (StructureHelperInput.BrushRotateLeft.GetKey())
         {
             _rotation -= Time.unscaledDeltaTime / 2f * Plugin.ModConfig.BrushRotateSpeed;
             _upDirChanged = true;
         }
-        else if (GameInput.GetButtonHeld(StructureHelperInput.BrushRotateRight))
+        else if (StructureHelperInput.BrushRotateRight.GetKey())
         {
             _rotation += Time.unscaledDeltaTime / 2f * Plugin.ModConfig.BrushRotateSpeed;
             _upDirChanged = true;
         }
-        if (GameInput.GetButtonHeld(StructureHelperInput.BrushDecreaseScale))
+        if (StructureHelperInput.BrushDecreaseScale.GetKey())
         {
             _scaleOffset = Mathf.Max(-1f, _scaleOffset - Time.unscaledDeltaTime * Plugin.ModConfig.BrushScaleSpeed);
         }
-        else if (GameInput.GetButtonHeld(StructureHelperInput.BrushIncreaseScale))
+        else if (StructureHelperInput.BrushIncreaseScale.GetKey())
         {
             _scaleOffset = Mathf.Max(-1f, _scaleOffset + Time.unscaledDeltaTime * Plugin.ModConfig.BrushScaleSpeed);
         }
@@ -133,7 +133,7 @@ public class DragAndDropTool : ToolBase
         if (_currentlySelected == null) return;
         var ray = GetRay();
         if (!Physics.Raycast(ray, out var hit, 80, -1, QueryTriggerInteraction.Ignore)) return;
-        var surfaceNormal = GameInput.GetButtonHeld(StructureHelperInput.UseGlobalUpNormal) ? Vector3.up : hit.normal;
+        var surfaceNormal = StructureHelperInput.UseGlobalUpNormal.GetKey() ? Vector3.up : hit.normal;
         _currentlySelected.transform.position = manager.snappingManager.SnapPlacementPosition(hit.point);
         if (!_upDirChanged)
         {

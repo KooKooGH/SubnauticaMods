@@ -1,4 +1,4 @@
-﻿using ModStructureHelperPlugin.Editing.Managers;
+using ModStructureHelperPlugin.Editing.Managers;
 using ModStructureHelperPlugin.StructureHandling;
 using ModStructureHelperPlugin.UI;
 using ModStructureHelperPlugin.Utility;
@@ -33,7 +33,7 @@ public class SelectionTool : ToolBase
 
     public override void UpdateTool()
     {
-        if (!GameInput.GetButtonDown(StructureHelperInput.Interact)) return;
+        if (!StructureHelperInput.Interact.GetKeyDown()) return;
         if (StructureHelperUI.main.editingScreenChecker.IsCursorHoveredOverExternalWindows()) return;
         if (manager.handle.GetIsAnyHandleHovered()) return;
 
@@ -90,7 +90,7 @@ public class SelectionTool : ToolBase
         
         var isSelected = SelectionManager.IsSelected(obj);
         
-        if (GameInput.GetButtonHeld(StructureHelperInput.SelectMultipleModifier))
+        if (StructureHelperInput.SelectMultipleModifier.GetKey())
         {
             if (isSelected) SelectionManager.RemoveSelectedObject(obj);
             else SelectionManager.AddSelectedObject(obj);

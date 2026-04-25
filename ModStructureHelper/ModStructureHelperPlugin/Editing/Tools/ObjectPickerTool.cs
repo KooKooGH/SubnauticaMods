@@ -1,4 +1,4 @@
-﻿using ModStructureHelperPlugin.UI;
+using ModStructureHelperPlugin.UI;
 using ModStructureHelperPlugin.Utility;
 
 namespace ModStructureHelperPlugin.Editing.Tools;
@@ -20,13 +20,13 @@ public class ObjectPickerTool : ToolBase
 
     protected override string GetBindString()
     {
-        var quickBindString = GameInput.FormatButton(StructureHelperInput.QuickPickEntity);
+        var quickBindString = StructureHelperInput.QuickPickEntity.ToString();
         return $"{base.GetBindString()} (quick: {quickBindString})";
     }
 
     public override void UpdateTool()
     {
-        if (GameInput.GetButtonDown(StructureHelperInput.Interact) && !StructureHelperUI.main.IsCursorHoveringOverExternalWindows)
+        if (StructureHelperInput.Interact.GetKeyDown() && !StructureHelperUI.main.IsCursorHoveringOverExternalWindows)
         {
             ObjectPickingUtils.PickObjectAtCursor();
         }   
@@ -34,7 +34,7 @@ public class ObjectPickerTool : ToolBase
 
     private void Update()
     {
-        if (GameInput.GetButtonDown(StructureHelperInput.QuickPickEntity) && !StructureHelperUI.main.IsCursorHoveringOverExternalWindows)
+        if (StructureHelperInput.QuickPickEntity.GetKeyDown() && !StructureHelperUI.main.IsCursorHoveringOverExternalWindows)
         {
             ObjectPickingUtils.PickObjectAtCursor();
         }   
