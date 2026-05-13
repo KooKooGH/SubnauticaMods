@@ -24,8 +24,8 @@ public class IceMaterialModifier : MaterialModifier
     {
         material.SetFloat(Fresnel, 0.63f);
         material.SetFloat(IbLreductionAtNight, 0.8f);
-        material.SetFloat(GlowStrength, 0.15f);
-        material.SetFloat(GlowStrengthNight, 0.15f);
+        material.SetFloat(GlowStrength, _dark ? 0.15f : 1);
+        material.SetFloat(GlowStrengthNight, _dark ? 0.15f : 0.3f);
         
         if (_dark)
         {
