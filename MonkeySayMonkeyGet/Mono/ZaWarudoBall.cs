@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Nautilus.Utility;
+using UnityEngine;
 
 namespace MonkeySayMonkeyGet.Mono;
 
@@ -20,11 +21,12 @@ public class ZaWarudoBall : MonoBehaviour
         var renderer = go.GetComponent<Renderer>();
         go.GetComponent<MeshFilter>().mesh = Plugin.AssetBundle.LoadAsset<Mesh>("InverseSphere");
         var m = renderer.material;
-        m.shader = Shader.Find("MarmosetUBER");
+        m.shader = MaterialUtils.Shaders.MarmosetUBER;
         m.EnableKeyword("MARMO_EMISSION");
         m.SetFloat("_EnableGlow", 1f);
         m.SetFloat("_EmissionLM", 1f);
         m.SetFloat("_EmissionLMNight", 1f);
+        m.SetColor("_GlowColor", Color.white);
         renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
 
         Destroy(go, 0.1f);

@@ -50,7 +50,7 @@ public class Create : VoiceCommandBase
         }
 
         var inventory = Inventory.main;
-        var itemSize = CraftData.GetItemSize(mentionedTechType);
+        var itemSize = TechData.GetItemSize(mentionedTechType);
 
         var mentionedNumber = PhraseManager.GetReferencedNumber(input, 1);
         for (int i = 0; i < mentionedNumber; i++)

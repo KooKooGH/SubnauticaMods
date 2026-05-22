@@ -142,7 +142,10 @@ public static class Utils
 
         bool IsValid(Transform transform)
         {
-            var dist = Vector3.Distance(camPosition, transform.transform.position);
+            if (transform == null)
+                return false;
+            
+            var dist = Vector3.Distance(camPosition, transform.position);
             if (notReferringToAll)
             {
                 if (dist > maxDistanceForLimitedTechTypeReference)
@@ -172,6 +175,9 @@ public static class Utils
 
         bool MatchingTechType(GameObject searchedObject)
         {
+            if (searchedObject == null)
+                return false;
+            
             var searchedObjectTechType = CraftData.GetTechType(searchedObject);
             if (linkedTechTypes.ContainsTechType(searchedObjectTechType) || techType == TechType.None)
             {
@@ -194,21 +200,22 @@ public static class Utils
         {
             foreach (EntityCell entityCell in keyValuePair.Value.All())
             {
-                if (entityCell.liveRoot != null)
+                if (entityCell == null) continue;
+
+                if (entityCell.liveRoot == null) continue;
+                
+                foreach (Transform child in entityCell.liveRoot.transform)
                 {
-                    foreach (Transform child in entityCell.liveRoot.transform)
+                    if (MatchingTechType(child.gameObject))
                     {
-                        if (MatchingTechType(child.gameObject))
+                        if (!IsValid(child))
                         {
-                            if (!IsValid(child))
-                            {
-                                continue;
-                            }
-                            list.Add(child.gameObject);
-                            if (list.Count >= limit)
-                            {
-                                return list;
-                            }
+                            continue;
+                        }
+                        list.Add(child.gameObject);
+                        if (list.Count >= limit)
+                        {
+                            return list;
                         }
                     }
                 }
