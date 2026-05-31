@@ -31,7 +31,7 @@ public static class Patches
         outlineRect.localScale = Vector3.one;
         outlineRect.localPosition = new Vector3(-472.5f, 310f, 0f);
 
-        var inputField = outline.AddComponent<TMP_InputField>();
+        var inputField = outline.AddComponent<uGUI_InputField>();
         var normalText = CreateTextChild(outline, "Text");
         inputField.textComponent = normalText;
         normalText.fontStyle = FontStyles.UpperCase;
