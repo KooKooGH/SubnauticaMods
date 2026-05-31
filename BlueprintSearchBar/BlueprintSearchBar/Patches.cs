@@ -20,6 +20,7 @@ public static class Patches
         font = contentParent.Find("ButtonPinsClear/Text").GetComponent<TextMeshProUGUI>().font;
 
         var outline = GameObject.Instantiate(outlineImage);
+        outline.name = "BlueprintSearchBar";
 
         var outlineRect = outline.GetComponent<RectTransform>();
         outlineRect.SetParent(contentParent);
