@@ -4,6 +4,7 @@ using UnityEngine;
 namespace ModStructureFormat;
 
 [Serializable]
+[Obsolete("Please use the ModStructureFormatV2")]
 public struct Coord4
 {
     public readonly float x;

@@ -6,6 +6,7 @@ namespace ModStructureFormat;
 /// Represents a single entity.
 /// </summary>
 [Serializable]
+[Obsolete("Please use the ModStructureFormatV2")]
 public class Entity
 {
     public string classId;

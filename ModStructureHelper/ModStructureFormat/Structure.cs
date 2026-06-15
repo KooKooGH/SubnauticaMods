@@ -7,6 +7,7 @@ namespace ModStructureFormat;
 /// Represents a group of entities.
 /// </summary>
 [Serializable]
+[Obsolete("Please use the ModStructureFormatV2")]
 public class Structure
 {
     public Entity[] Entities { get; private set; }

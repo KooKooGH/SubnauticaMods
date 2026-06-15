@@ -6,6 +6,7 @@ namespace ModStructureFormat;
 /// Represents a group of object IDs to be removed from the world.
 /// </summary>
 [Serializable]
+[Obsolete("Please use the ModStructureFormatV2")]
 public class AntiStructure
 {
     public AntiStructure(List<string> uniqueIds)
