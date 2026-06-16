@@ -41,7 +41,9 @@ public class UndoHistory : MonoBehaviour
         var latestSnapshots = GetLatestSnapshotGroup(lastValidMementoIndex);
         foreach (var snapshot in latestSnapshots)
         {
-            yield return snapshot.Restore();
+            snapshot.RestoreSync();
+            if (snapshot is IAsyncMemento asyncMemento)
+                yield return asyncMemento.RestoreAsync();
             changes++;
         }
         

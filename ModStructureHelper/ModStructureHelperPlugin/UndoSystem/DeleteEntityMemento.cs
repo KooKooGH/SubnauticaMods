@@ -5,7 +5,7 @@ using UWE;
 
 namespace ModStructureHelperPlugin.UndoSystem;
 
-public readonly struct DeleteEntityMemento : IMemento
+public readonly struct DeleteEntityMemento : IAsyncMemento
 {
     public int SaveFrame { get; }
 
@@ -19,8 +19,13 @@ public readonly struct DeleteEntityMemento : IMemento
         LastEntityMemento = lastEntityMemento;
         SaveFrame = saveFrame;
     }
-
-    private IEnumerator Restore()
+    
+    public void RestoreSync()
+    {
+        
+    }
+    
+    IEnumerator IAsyncMemento.RestoreAsync()
     {
         var request = PrefabDatabase.GetPrefabAsync(ClassId);
         yield return request;
@@ -42,11 +47,6 @@ public readonly struct DeleteEntityMemento : IMemento
         var managedEntity = structureInstance.RegisterNewEntity(prefabIdentifier, false);
         var alteredMemento = new ManagedEntity.Memento(managedEntity, LastEntityMemento.Id, LastEntityMemento.Position,
             LastEntityMemento.Rotation, LastEntityMemento.Scale, Time.frameCount);
-        yield return alteredMemento.Restore();
-    }
-    
-    IEnumerator IMemento.Restore()
-    {
-        yield return Restore();
+        alteredMemento.RestoreSync();
     }
 }

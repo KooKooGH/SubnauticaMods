@@ -125,7 +125,7 @@ public class ManagedEntity : IOriginator
         Position = memento.Position;
         Rotation = memento.Rotation;
         Scale = memento.Scale;
-        if (Id != memento.Id) Id = memento.Id;    
+        if (Id != memento.Id) Id = memento.Id;
     }
 
     public void CreateAndSaveSnapshot()
@@ -153,7 +153,7 @@ public class ManagedEntity : IOriginator
             SaveFrame = saveFrame;
         }
 
-        public IEnumerator Restore()
+        public void RestoreSync()
         {
             ManagedEntity originator = Originator;
             
@@ -174,7 +174,7 @@ public class ManagedEntity : IOriginator
                 var warningMessage = "Transformation undo failed; the object to be reverted cannot be found!";
                 ErrorMessage.AddMessage(warningMessage);
                 Plugin.Logger.LogWarning(warningMessage);
-                yield break;
+                return;
             }
             
             originator.SetState(this);
