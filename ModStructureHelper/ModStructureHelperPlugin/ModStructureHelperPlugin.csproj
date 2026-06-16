@@ -8,7 +8,7 @@
         <LangVersion>11</LangVersion>
         <RootNamespace>ModStructureHelperPlugin</RootNamespace>
         <BepInExPluginName>Mod Structure Helper</BepInExPluginName>
-        <BepInExPluginGuid>com.lee23.modstructurehelper</BepInExPluginGuid>
+        <BepInExPluginGuid>com.kallie23.modstructurehelper</BepInExPluginGuid>
 
         <RestoreAdditionalProjectSources>
             https://api.nuget.org/v3/index.json;
