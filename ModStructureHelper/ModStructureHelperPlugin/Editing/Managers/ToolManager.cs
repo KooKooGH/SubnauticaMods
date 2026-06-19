@@ -65,6 +65,11 @@ public class ToolManager : MonoBehaviour
         {
             return ModifierFixUtils.GetModifierHeld(StructureHelperInput.AltToolHotkeyModifier);
         }
+        
+        if (tool.RequiresShiftModifierHeld)
+        {
+            return ModifierFixUtils.GetModifierHeld(StructureHelperInput.ShiftHotkeyModifier);
+        }
 
         return !ModifierFixUtils.GetModifierHeld(StructureHelperInput.ToolHotkeyModifier);
     }

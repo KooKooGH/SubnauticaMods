@@ -13,7 +13,7 @@ public class DuplicateTool : ToolBase
     public override ToolType Type => ToolType.Duplicate;
 
     public override bool MultitaskTool => true;
-    public override bool RequiresModifierHeld => true;
+    public override bool RequiresShiftModifierHeld => true;
 
     protected override void OnToolEnabled()
     {

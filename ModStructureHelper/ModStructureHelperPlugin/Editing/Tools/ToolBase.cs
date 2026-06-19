@@ -17,6 +17,7 @@ public abstract class ToolBase : TooltipTarget
     public virtual bool MultitaskTool => false;
     public virtual bool RequiresModifierHeld => false;
     public virtual bool RequiresAlternateModifierHeld => false;
+    public virtual bool RequiresShiftModifierHeld => false;
     public virtual bool IncompatibleWithSelectTool => false;
     
     public bool ToolEnabled { get; private set; }
@@ -41,6 +42,11 @@ public abstract class ToolBase : TooltipTarget
         if (RequiresModifierHeld)
         {
             bindString = $"{GameInput.FormatButton(StructureHelperInput.ToolHotkeyModifier)} + " + bindString;
+        }
+        
+        if (RequiresShiftModifierHeld)
+        {
+            bindString = $"{GameInput.FormatButton(StructureHelperInput.ShiftHotkeyModifier)} + " + bindString;
         }
         
         return bindString;

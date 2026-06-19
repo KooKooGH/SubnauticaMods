@@ -163,7 +163,7 @@ public static class StructureHelperInput
         .AvoidConflicts()
         .WithCategory(ToolsCategory);
 
-    [EnglishTranslation("Duplicate (w/ modifier)")]
+    [EnglishTranslation("Duplicate (w/ shift modifier)")]
     public static readonly GameInput.Button DuplicateBind = EnumHandler
         .AddEntry<GameInput.Button>("SH_DuplicateBind")
         .CreateInput()
@@ -234,6 +234,14 @@ public static class StructureHelperInput
         .AddEntry<GameInput.Button>("SH_ToolHotkeyModifier")
         .CreateInput()
         .WithKeyboardBinding(GameInputHandler.Paths.Keyboard.LeftCtrl)
+        .AvoidConflicts()
+        .WithCategory(ModifiersCategory);
+    
+    [EnglishTranslation("Shift tool modifier")]
+    public static readonly GameInput.Button ShiftHotkeyModifier = EnumHandler
+        .AddEntry<GameInput.Button>("SH_ShiftHotkeyModifier")
+        .CreateInput()
+        .WithKeyboardBinding(GameInputHandler.Paths.Keyboard.LeftShift)
         .AvoidConflicts()
         .WithCategory(ModifiersCategory);
     
