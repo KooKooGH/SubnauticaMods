@@ -10,7 +10,7 @@ public class SnappingManager : MonoBehaviour
     private float RotationSnap { get; set; }
     private Vector3 ScalingSnap { get; set; }
     private HandleSnappingType ScalingSnapType => HandleSnappingType.RELATIVE;
-    public bool UseGlobalGrid { get; private set; }
+    private bool UseGlobalGrid { get; set; }
     private Vector3 GlobalGridPosition { get; set; }
     private Vector3 GlobalGridRotation { get; set; }
     public bool SnappingEnabled { get; set; }
@@ -31,6 +31,11 @@ public class SnappingManager : MonoBehaviour
     public void SetUseGlobalGrid(bool useGlobalGrid)
     {
         UseGlobalGrid = useGlobalGrid;
+    }
+
+    public bool GetUseGlobalGrid()
+    {
+        return UseGlobalGrid && SelectionManager.NumberOfSelectedObjects <= 1;
     }
 
     public void SetGlobalGridCenter(Vector3 globalGridPosition)
@@ -70,7 +75,7 @@ public class SnappingManager : MonoBehaviour
 
     public Vector3 SnapPlacementPosition(Vector3 position)
     {
-        if (!GetUseSnapping() || !UseGlobalGrid)
+        if (!GetUseSnapping() || !GetUseGlobalGrid())
             return position;
 
         // Global grid space
@@ -118,14 +123,14 @@ public class SnappingManager : MonoBehaviour
         }
         
         float snap = Vector3.Scale(PositionSnap, axis).magnitude;
-        if (snap != 0 && !UseGlobalGrid)
+        if (snap != 0 && !GetUseGlobalGrid())
         {
             offset = Mathf.Round(offset.magnitude / snap) * snap * offset.normalized;
         }
 
         var position = startPosition + offset;
 
-        if (snap != 0 && UseGlobalGrid)
+        if (snap != 0 && GetUseGlobalGrid())
         {
             return SnapPlacementPosition(position);
         }
@@ -141,7 +146,7 @@ public class SnappingManager : MonoBehaviour
         }
         
         float snap = Vector3.Scale(PositionSnap, axis).magnitude;
-        if (snap != 0 && !UseGlobalGrid)
+        if (snap != 0 && !GetUseGlobalGrid())
         {
             if (PositionSnap.x != 0) offset.x = Mathf.Round(offset.x / PositionSnap.x) * PositionSnap.x;
             if (PositionSnap.y != 0) offset.y = Mathf.Round(offset.y / PositionSnap.y) * PositionSnap.y;
@@ -150,7 +155,7 @@ public class SnappingManager : MonoBehaviour
 
         Vector3 position = startPosition + offset;
 
-        if (snap != 0 && UseGlobalGrid)
+        if (snap != 0 && GetUseGlobalGrid())
         {
             return SnapPlacementPosition(position);
         }

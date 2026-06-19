@@ -47,6 +47,7 @@ namespace ModStructureHelperPlugin.Handle.Handles
             _hitPoint = p_hitPoint;
             InteractionStart?.Invoke();
             _isInteracting = true;
+            _parentTransformHandle.Target.StartManipulation();
         }
 
         public virtual bool CanInteract(Vector3 p_hitPoint)
@@ -66,6 +67,7 @@ namespace ModStructureHelperPlugin.Handle.Handles
             delta = 0;
             SetDefaultColor();
             IsHovering = false;
+            _parentTransformHandle.Target.EndManipulation();
         }
 
         static public Vector3 GetVectorFromAxes(HandleAxes p_axes)

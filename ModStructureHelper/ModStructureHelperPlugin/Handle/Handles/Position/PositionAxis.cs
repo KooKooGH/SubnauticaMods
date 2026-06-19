@@ -56,8 +56,8 @@ namespace ModStructureHelperPlugin.Handle.Handles.Position
             
             Vector3 offset = hitPoint + _interactionOffset - _startPosition;
 
-            _parentTransformHandle.Target.position =
-                _parentTransformHandle.snappingManager.SnapPositionAxis(_startPosition, offset, _axis);
+            _parentTransformHandle.Target.SetPivotPosition(
+                _parentTransformHandle.snappingManager.SnapPositionAxis(_startPosition, offset, _axis));
 
             base.Interact(p_previousPosition);
         }
@@ -66,10 +66,10 @@ namespace ModStructureHelperPlugin.Handle.Handles.Position
         {
             base.StartInteraction(p_hitPoint);
             
-            _startPosition = _parentTransformHandle.Target.position;
+            _startPosition = _parentTransformHandle.Target.PivotPosition;
 
             Vector3 raxis = _parentTransformHandle.space == HandleSpace.LOCAL
-                ? _parentTransformHandle.Target.rotation * _axis
+                ? _parentTransformHandle.Target.PivotRotation * _axis
                 : _axis;
             
             _raxisRay = new Ray(_startPosition, raxis);

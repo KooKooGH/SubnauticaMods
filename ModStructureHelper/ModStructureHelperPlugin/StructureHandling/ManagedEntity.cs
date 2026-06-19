@@ -126,6 +126,8 @@ public class ManagedEntity : IOriginator
         Rotation = memento.Rotation;
         Scale = memento.Scale;
         if (Id != memento.Id) Id = memento.Id;
+        // Necessary to reset the pivot properly
+        StructureHelperUI.main.toolManager.handle.RefreshHandles();
     }
 
     public void CreateAndSaveSnapshot()

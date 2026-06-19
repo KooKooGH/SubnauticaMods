@@ -43,7 +43,7 @@ namespace ModStructureHelperPlugin.Handle.Handles.Scale
                 newScale = Vector3.one * ((newScale.x + newScale.y + newScale.z) / 3);
             }
 
-            _parentTransformHandle.Target.localScale = newScale;
+            _parentTransformHandle.Target.SetScale(newScale);
             
             base.Interact(p_previousPosition);
         }
@@ -51,7 +51,7 @@ namespace ModStructureHelperPlugin.Handle.Handles.Scale
         public override void StartInteraction(Vector3 p_hitPoint)
         {
             base.StartInteraction(p_hitPoint);
-            _startScale = _parentTransformHandle.Target.localScale;
+            _startScale = _parentTransformHandle.Target.Scale;
         }
     }
 }

@@ -26,7 +26,7 @@ public class SelectAllTool : ToolBase
             foreach (var entity in StructureInstance.Main.GetAllManagedEntities())
             {
                 if (entity.EntityInstance == null) continue;
-                SelectionManager.AddSelectedObject(entity.EntityInstance.gameObject);
+                SelectionManager.AddSelectedObject(entity.EntityInstance.transform);
             }
             ErrorMessage.AddMessage($"Selected all {loadedEntityCount} entities.");
         }

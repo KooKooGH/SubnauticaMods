@@ -48,7 +48,7 @@ public class SelectionTool : ToolBase
             var selectionResultNormal = SelectionManager.TryGetObjectRoot(hit.collider.gameObject, out var solidRaycastRoot, SelectionManager.SelectionFilterMode.AllowTransformableObjects);
             if (selectionResultNormal == SelectionManager.ObjectRootResult.Success)
             {
-                HandleObjectSelection(solidRaycastRoot);
+                HandleObjectSelection(solidRaycastRoot.transform);
                 return;
             }
 
@@ -76,11 +76,11 @@ public class SelectionTool : ToolBase
         var selectionResultTrigger = SelectionManager.TryGetObjectRoot(hit.collider.gameObject, out var triggerRaycastRoot, SelectionManager.SelectionFilterMode.Default);
         if (selectionResultTrigger == SelectionManager.ObjectRootResult.Success)
         {
-            HandleObjectSelection(triggerRaycastRoot);
+            HandleObjectSelection(triggerRaycastRoot.transform);
         }
     }
 
-    private void HandleObjectSelection(GameObject obj)
+    private void HandleObjectSelection(Transform obj)
     {
         if (StructureInstance.Main == null)
         {

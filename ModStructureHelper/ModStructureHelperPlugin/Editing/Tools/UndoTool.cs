@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using ModStructureHelperPlugin.Editing.Managers;
 using UnityEngine;
 
 namespace ModStructureHelperPlugin.Editing.Tools;
@@ -38,6 +39,7 @@ public class UndoTool : ToolBase
         yield return manager.undoHistory.Undo();
         _coroutineRunning = false;
         yield return new WaitForSeconds(0.1f);
+        SelectionManager.DeselectDeletedObjects();
         DisableTool();
     }
 }

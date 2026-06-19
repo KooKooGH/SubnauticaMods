@@ -23,7 +23,7 @@ public class DuplicateTool : ToolBase
 
     private IEnumerator DuplicateAllSelectedObjects()
     {
-        var duplicatedObjects = new List<GameObject>();
+        var duplicatedObjects = new List<Transform>();
         var loadedPrefabs = new Dictionary<string, GameObject>();
         var addedObjectIds = new List<string>();
         foreach (var selected in SelectionManager.SelectedObjects)
@@ -52,10 +52,17 @@ public class DuplicateTool : ToolBase
             var newEntityIdentifier = newCopy.GetComponent<PrefabIdentifier>();
             StructureInstance.Main.RegisterNewEntity(newEntityIdentifier, false);
             addedObjectIds.Add(newEntityIdentifier.Id);
-            duplicatedObjects.Add(newCopy);
+            duplicatedObjects.Add(newCopy.transform);
         }
+
+        bool wasActivelyManipulating = manager.handle.Target != null && manager.handle.Target.Manipulating;
         SelectionManager.ClearSelection();
         duplicatedObjects.ForEach(SelectionManager.AddSelectedObject);
+        if (wasActivelyManipulating && manager.handle.Target != null)
+        {
+            // Necessary for if you were already using the handles
+            manager.handle.Target.StartManipulation();
+        }
         // MANUALLY snapshot the objects being added, all at once, so that it all occurs in the same frame!
         addedObjectIds.ForEach(id => StructureHelperUI.main.toolManager.undoHistory.Snapshot(new AddEntityMemento(id, Time.frameCount)));
         ErrorMessage.AddMessage($"Duplicated {duplicatedObjects.Count} object(s).");

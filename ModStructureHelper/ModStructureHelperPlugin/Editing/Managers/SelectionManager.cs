@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using ModStructureHelperPlugin.Handle;
 using ModStructureHelperPlugin.Handle.Handles;
 using ModStructureHelperPlugin.Interfaces;
@@ -11,17 +12,22 @@ namespace ModStructureHelperPlugin.Editing.Managers;
 
 public static class SelectionManager
 {
-    private static List<GameObject> _targets = new();
+    private static List<Transform> _targets = new();
 
-    private static readonly Stack<GameObject> SelectionHistory = new();
+    private static readonly Stack<Transform> SelectionHistory = new();
 
-    public static bool IsSelected(GameObject obj) => _targets.Contains(obj);
+    public static bool IsSelected(Transform transform) => _targets.Contains(transform);
     
     public static void SetSelectedObject(GameObject obj)
     {
+        SetSelectedObject(obj.transform);
+    }
+    
+    public static void SetSelectedObject(Transform transform)
+    {
         _targets.ForEach(old => OnTargetRemovedInternal(old));
-        _targets = new List<GameObject> {obj};
-        OnTargetAddedInternal(obj);
+        _targets = new List<Transform> { transform };
+        OnTargetAddedInternal(transform);
         OnUpdateTargetInternal();
     }
 
@@ -32,14 +38,26 @@ public static class SelectionManager
         OnUpdateTargetInternal();
     }
     
-    public static void AddSelectedObject(GameObject obj)
+    public static void DeselectDeletedObjects()
+    {
+        var newTargetsList = new List<Transform>();
+        _targets.ForEach(obj =>
+        {
+            if (obj != null)
+                newTargetsList.Add(obj);
+        });
+        _targets = newTargetsList;
+        OnUpdateTargetInternal();
+    }
+    
+    public static void AddSelectedObject(Transform obj)
     {
         _targets.Add(obj);
         OnTargetAddedInternal(obj);
         OnUpdateTargetInternal();
     }
     
-    public static void RemoveSelectedObject(GameObject obj)
+    public static void RemoveSelectedObject(Transform obj)
     {
         OnTargetRemovedInternal(obj);
         _targets.Remove(obj);
@@ -59,7 +77,7 @@ public static class SelectionManager
         }
     }
 
-    public static GameObject GetLastSelectedGameObject()
+    public static Transform GetLastSelectedGameObject()
     {
         while (SelectionHistory.Count > 0)
         {
@@ -73,9 +91,9 @@ public static class SelectionManager
 
     public static int NumberOfSelectedObjects => _targets.Count;
     
-    public static IEnumerable<GameObject> SelectedObjects => _targets;
+    public static IEnumerable<Transform> SelectedObjects => _targets;
 
-    private static void OnTargetAddedInternal(GameObject newTarget)
+    private static void OnTargetAddedInternal(Transform newTarget)
     {
         if (newTarget == null) return;
         var outline = AddOutline(newTarget);
@@ -88,7 +106,7 @@ public static class SelectionManager
         SelectionHistory.Push(newTarget);
     }
     
-    private static void OnTargetRemovedInternal(GameObject target)
+    private static void OnTargetRemovedInternal(Transform target)
     {
         if (target == null) return;
         Object.DestroyImmediate(target.GetComponent<OutlineBehaviour>());
@@ -96,12 +114,12 @@ public static class SelectionManager
             selectionListener.OnObjectDeselected();
     }
 
-    private static OutlineBehaviour AddOutline(GameObject obj)
+    private static OutlineBehaviour AddOutline(Transform obj)
     {
         var existing = obj.GetComponent<OutlineBehaviour>();
         if (existing) return existing;
         
-        var outlineBehaviour = obj.AddComponent<OutlineBehaviour>();
+        var outlineBehaviour = obj.gameObject.AddComponent<OutlineBehaviour>();
         outlineBehaviour.OutlineResources = Plugin.OutlineResources;
         
         outlineBehaviour.OutlineColor = Color.yellow;
@@ -150,21 +168,6 @@ public static class SelectionManager
         return ObjectRootResult.NoSelection;
     }
 
-    public enum ObjectRootResult
-    {
-        NoSelection,
-        Success,
-        Failed
-    }
-
-    [System.Flags]
-    public enum SelectionFilterMode
-    {
-        Default,
-        NoStructureRequired = 1,
-        AllowTransformableObjects = 2,
-    }
-
     private static void OnUpdateTargetInternal()
     {
         var runtimeTransformHandle = RuntimeTransformHandle.main;
@@ -186,8 +189,23 @@ public static class SelectionManager
                 runtimeTransformHandle.SetTarget(_targets[0].transform);
                 break;
             case > 1:
-                ErrorMessage.AddMessage("Unsupported number of objects selected. Multi-object selection is not supported!");
+                runtimeTransformHandle.SetTargets(_targets);
                 break;
         }
+    }
+    
+    public enum ObjectRootResult
+    {
+        NoSelection,
+        Success,
+        Failed
+    }
+
+    [System.Flags]
+    public enum SelectionFilterMode
+    {
+        Default,
+        NoStructureRequired = 1,
+        AllowTransformableObjects = 2,
     }
 }

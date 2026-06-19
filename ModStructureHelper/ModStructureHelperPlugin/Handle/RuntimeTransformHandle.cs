@@ -1,9 +1,10 @@
-﻿using ModStructureHelperPlugin.Editing.Managers;
-using ModStructureHelperPlugin.Editing.Tools;
+﻿using System.Collections.Generic;
+using ModStructureHelperPlugin.Editing.Managers;
 using ModStructureHelperPlugin.Handle.Handles;
 using ModStructureHelperPlugin.Handle.Handles.Position;
 using ModStructureHelperPlugin.Handle.Handles.Rotation;
 using ModStructureHelperPlugin.Handle.Handles.Scale;
+using ModStructureHelperPlugin.Handle.Utils;
 using ModStructureHelperPlugin.Interfaces;
 using ModStructureHelperPlugin.UI;
 using UnityEngine;
@@ -40,10 +41,8 @@ public class RuntimeTransformHandle : MonoBehaviour
     private RotationHandle _rotationHandle;
     private ScaleHandle _scaleHandle;
 
-    public Transform Target { get; private set; }
-
-    private bool _targetRbWasKinematic;
-
+    public HandleTarget Target { get; private set; }
+    
     public UnityEvent startedDraggingHandle = new UnityEvent();
     public UnityEvent isDraggingHandle = new UnityEvent();
     public UnityEvent endedDraggingHandle = new UnityEvent();
@@ -59,10 +58,7 @@ public class RuntimeTransformHandle : MonoBehaviour
 
         _previousType = type;
 
-        if (Target == null)
-            Target = transform;
-
-        if (disableWhenNoTarget && Target == transform)
+        if (disableWhenNoTarget && Target == null)
             gameObject.SetActive(false);
 
         CreateHandles();
@@ -143,29 +139,33 @@ public class RuntimeTransformHandle : MonoBehaviour
 
         _previousMousePosition = GetMousePosition();
             
-        transform.position = Target.transform.position;
+        transform.position = Target.PivotPosition;
         if (space == HandleSpace.LOCAL || type == HandleType.SCALE)
         {
-            transform.rotation = Target.transform.rotation;
+            transform.rotation = Target.PivotRotation;
         }
         else
         {
             transform.rotation = Quaternion.identity;
         }
     }
-        
-    // both of the following methods expect Target to be not null and valid
-
+    
     private void OnStartTransforming()
     {
-        foreach (var transformationListener in Target.GetComponents<ITransformationListener>())
-            transformationListener.OnStartTransforming();
+        foreach (var targetTransform in Target.GetTargetTransforms(true))
+        {
+            foreach (var transformationListener in targetTransform.GetComponents<ITransformationListener>())
+                transformationListener.OnStartTransforming();
+        }
     }
         
     private void OnFinishTransforming()
     {
-        foreach (var onFinishTransformation in Target.GetComponents<ITransformationListener>())
-            onFinishTransformation.OnFinishTransforming();
+        foreach (var targetTransform in Target.GetTargetTransforms(true))
+        {
+            foreach (var transformationListener in targetTransform.GetComponents<ITransformationListener>())
+                transformationListener.OnFinishTransforming();
+        }
     }
 
     public static bool GetPointerDown()
@@ -232,92 +232,42 @@ public class RuntimeTransformHandle : MonoBehaviour
         }
     }
 
-    static public RuntimeTransformHandle Create(Transform p_target, HandleType p_handleType)
-    {
-        RuntimeTransformHandle runtimeTransformHandle = new GameObject().AddComponent<RuntimeTransformHandle>();
-        runtimeTransformHandle.Target = p_target;
-        runtimeTransformHandle.type = p_handleType;
-
-        return runtimeTransformHandle;
-    }
-
     #region public methods to control handles
     public void SetTarget(Transform newTarget)
     {
-        var canActivate = false;
-        foreach (var tool in StructureHelperUI.main.toolManager.tools)
-        {
-            if (!tool.ToolEnabled) continue;
-            if (tool.Type is ToolType.Rotate or ToolType.Scale or ToolType.Translate)
-            {
-                canActivate = true;
-            }
-        }
-        gameObject.SetActive(canActivate && newTarget != null);
-        if (Target != null)
-        {
-            var rb = Target.gameObject.GetComponent<Rigidbody>();
-            if (rb) rb.isKinematic = _targetRbWasKinematic;
-        }
-        Target = newTarget;
-        if (newTarget == null) return;
-        var newRb = newTarget.gameObject.GetComponent<Rigidbody>();
-        _targetRbWasKinematic = !newRb || newRb.isKinematic;
-        if (newRb) newRb.isKinematic = true;
-    }
+        gameObject.SetActive(StructureHelperUI.main.toolManager.IsTransformationAllowed() && newTarget != null);
         
-    /*
-        public void SetTarget(GameObject newTarget)
+        TargetNeutralization.RestoreAll();
+        
+        if (newTarget == null)
         {
-            Target = newTarget.transform;
-
-            if (Target == null)
-                Target = transform;
-
-            if (disableWhenNoTarget && Target == transform)
-                gameObject.SetActive(false);
-            else if(disableWhenNoTarget && Target != transform)
-                gameObject.SetActive(true);
+            Target = null;
+            return;
         }
-        */
 
-    public void SetHandleMode(int mode)
-    {
-        SetHandleMode((HandleType)mode);
+        Target = new HandleTarget(newTarget);
+        
+        TargetNeutralization.NeutralizeTarget(newTarget);
     }
 
-    public void SetHandleMode(HandleType mode)
+    public void SetTargets(IReadOnlyList<Transform> newTargets)
     {
-        type = mode;
-    }
+        TargetNeutralization.RestoreAll();
+        
+        if (newTargets.Count == 0)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
+        
+        gameObject.SetActive(StructureHelperUI.main.toolManager.IsTransformationAllowed());
 
-    public void EnableXAxis(bool enable)
-    {
-        if (enable)
-            axes |= HandleAxes.X;
-        else
-            axes &= ~HandleAxes.X;
-    }
+        Target = new HandleTarget(newTargets);
 
-    public void EnableYAxis(bool enable)
-    {
-        if (enable)
-            axes |= HandleAxes.Y;
-        else
-            axes &= ~HandleAxes.Y;
-    }
-
-    public void EnableZAxis(bool enable)
-    {
-        if (enable)
-            axes |= HandleAxes.Z;
-        else
-            axes &= ~HandleAxes.Z;
-    }
-
-    public void SetAxis(HandleAxes newAxes)
-    {
-        axes = newAxes;
+        foreach (var target in Target.GetTargetTransforms(true))
+        {
+            TargetNeutralization.NeutralizeTarget(target);
+        }
     }
 
     public bool GetIsAnyHandleHovered()
@@ -331,6 +281,12 @@ public class RuntimeTransformHandle : MonoBehaviour
             HandleType.SCALE => _scaleHandle.GetIsAnyHandleHovered(),
             _ => false
         };
+    }
+
+    public void RefreshHandles()
+    {
+        if (Target != null)
+            Target.Refresh();
     }
     #endregion
 }

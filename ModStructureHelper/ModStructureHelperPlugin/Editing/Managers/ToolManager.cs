@@ -76,6 +76,20 @@ public class ToolManager : MonoBehaviour
     
     public ToolBase GetTool(ToolType type) => (from tool in tools where tool.Type == type select tool).FirstOrDefault();
 
+    public bool IsTransformationAllowed()
+    {
+        foreach (var tool in StructureHelperUI.main.toolManager.tools)
+        {
+            if (!tool.ToolEnabled) continue;
+            if (tool.Type is ToolType.Rotate or ToolType.Scale or ToolType.Translate)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+    
     public GameInput.Button GetButtonForTool(ToolType tool)
     {
         switch (tool)

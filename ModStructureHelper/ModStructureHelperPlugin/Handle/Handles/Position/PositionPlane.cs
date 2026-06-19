@@ -57,18 +57,20 @@ namespace ModStructureHelperPlugin.Handle.Handles.Position
 
             var position = _parentTransformHandle.snappingManager.SnapPositionPlane(_startPosition, offset, axis);
 
-            _parentTransformHandle.Target.position = position;
+            _parentTransformHandle.Target.SetPivotPosition(position);
 
             base.Interact(p_previousPosition);
         }
 
         public override void StartInteraction(Vector3 p_hitPoint)
         {
+            base.StartInteraction(p_hitPoint);
+            
             Vector3 rperp = _parentTransformHandle.space == HandleSpace.LOCAL
-                ? _parentTransformHandle.Target.rotation * _perp
+                ? _parentTransformHandle.Target.PivotRotation * _perp
                 : _perp;
             
-            _plane = new Plane(rperp, _parentTransformHandle.Target.position);
+            _plane = new Plane(rperp, _parentTransformHandle.Target.PivotPosition);
             
             Ray ray = Camera.main.ScreenPointToRay(RuntimeTransformHandle.GetMousePosition());
 
@@ -76,7 +78,7 @@ namespace ModStructureHelperPlugin.Handle.Handles.Position
             _plane.Raycast(ray, out d);
             
             Vector3 hitPoint = ray.GetPoint(d);
-            _startPosition = _parentTransformHandle.Target.position;
+            _startPosition = _parentTransformHandle.Target.PivotPosition;
             _interactionOffset = _startPosition - hitPoint;
         }
 
@@ -85,7 +87,7 @@ namespace ModStructureHelperPlugin.Handle.Handles.Position
             if (_parentTransformHandle.Target == null) return;
             Vector3 axis1 = _axis1;
             Vector3 raxis1 = _parentTransformHandle.space == HandleSpace.LOCAL
-                ? _parentTransformHandle.Target.rotation * axis1
+                ? _parentTransformHandle.Target.PivotRotation * axis1
                 : axis1;
             float angle1 = Vector3.Angle(_parentTransformHandle.handleCamera.transform.forward, raxis1);
             if (angle1 < 90)
@@ -97,7 +99,7 @@ namespace ModStructureHelperPlugin.Handle.Handles.Position
             
             Vector3 axis2 = _axis2;
             Vector3 raxis2 = _parentTransformHandle.space == HandleSpace.LOCAL
-                ? _parentTransformHandle.Target.rotation * axis2
+                ? _parentTransformHandle.Target.PivotRotation * axis2
                 : axis2;
             float angle2 = Vector3.Angle(_parentTransformHandle.handleCamera.transform.forward, raxis2);
             if (angle2 < 90)

@@ -1,3 +1,4 @@
+using System;
 using ModStructureHelperPlugin.Handle.Utils;
 using UnityEngine;
 
@@ -65,13 +66,13 @@ namespace ModStructureHelperPlugin.Handle.Handles.Rotation
             }
             
             Vector3 hitPoint     = cameraRay.GetPoint(hitT);
-            Vector3 hitDirection = (hitPoint - _parentTransformHandle.Target.position).normalized;
+            Vector3 hitDirection = (hitPoint - _parentTransformHandle.Target.PivotPosition).normalized;
             float   x            = Vector3.Dot(hitDirection, _tangent);
             float   y            = Vector3.Dot(hitDirection, _biTangent);
             float   angleRadians = Mathf.Atan2(y, x);
 
             float angleDegrees;
-            if (!_parentTransformHandle.snappingManager.SnappingEnabled || _parentTransformHandle.snappingManager.UseGlobalGrid)
+            if (!_parentTransformHandle.snappingManager.SnappingEnabled || _parentTransformHandle.snappingManager.GetUseGlobalGrid())
             {
                 angleDegrees = angleRadians * Mathf.Rad2Deg;
             }
@@ -82,20 +83,22 @@ namespace ModStructureHelperPlugin.Handle.Handles.Rotation
             
             if (_parentTransformHandle.space == HandleSpace.LOCAL)
             {
-                _parentTransformHandle.Target.localRotation = _startRotation * Quaternion.AngleAxis(angleDegrees, _axis);
+                var newRotation = _startRotation * Quaternion.AngleAxis(angleDegrees, _axis);
+                _parentTransformHandle.Target.SetPivotRotation(newRotation);
             }
             else
             {
                 Vector3 invertedRotatedAxis = Quaternion.Inverse(_startRotation) * _axis;
-                _parentTransformHandle.Target.rotation = _startRotation * Quaternion.AngleAxis(angleDegrees, invertedRotatedAxis);
+                var newRotation = _startRotation * Quaternion.AngleAxis(angleDegrees, invertedRotatedAxis);
+                _parentTransformHandle.Target.SetPivotRotation(newRotation);
             }
 
             if (_parentTransformHandle.snappingManager.SnappingEnabled &&
-                _parentTransformHandle.snappingManager.UseGlobalGrid)
+                _parentTransformHandle.snappingManager.GetUseGlobalGrid())
             {
-                _parentTransformHandle.Target.rotation =
-                    _parentTransformHandle.snappingManager.SnapPlacementRotation(_parentTransformHandle.Target
-                        .rotation);
+                var newRotation = _parentTransformHandle.snappingManager.SnapPlacementRotation(
+                    _parentTransformHandle.Target.PivotRotation);
+                _parentTransformHandle.Target.SetPivotRotation(newRotation);
             }
 
             _arcMesh = MeshUtils.CreateArc(transform.position, _hitPoint, _rotatedAxis, 2, angleRadians, Mathf.Abs(Mathf.CeilToInt(angleDegrees)) + 1);
@@ -118,9 +121,10 @@ namespace ModStructureHelperPlugin.Handle.Handles.Rotation
            
             
             base.StartInteraction(p_hitPoint);
-            
-            _startRotation = _parentTransformHandle.space == HandleSpace.LOCAL ? _parentTransformHandle.Target.localRotation : _parentTransformHandle.Target.rotation;
 
+            // _startRotation = _parentTransformHandle.space == HandleSpace.LOCAL ? _parentTransformHandle.Target.localRotation : _parentTransformHandle.Target.rotation;
+            _startRotation = _parentTransformHandle.Target.PivotRotation;
+            
             _arcMaterial = new Material(Plugin.AssetBundle.LoadAsset<Shader>("HandleShader"));
             _arcMaterial.color = new Color(1,1,0,.4f);
             _arcMaterial.renderQueue = 5000;
@@ -132,10 +136,10 @@ namespace ModStructureHelperPlugin.Handle.Handles.Rotation
             }
             else
             {
-                _rotatedAxis     = _axis;
+                _rotatedAxis = _axis;
             }
 
-            _axisPlane = new Plane(_rotatedAxis, _parentTransformHandle.Target.position);
+            _axisPlane = new Plane(_rotatedAxis, _parentTransformHandle.Target.PivotPosition);
 
             Vector3 startHitPoint;
             Ray     cameraRay = Camera.main.ScreenPointToRay(RuntimeTransformHandle.GetMousePosition());
@@ -148,7 +152,7 @@ namespace ModStructureHelperPlugin.Handle.Handles.Rotation
                 startHitPoint = _axisPlane.ClosestPointOnPlane(p_hitPoint);
             }
             
-            _tangent   = (startHitPoint - _parentTransformHandle.Target.position).normalized;
+            _tangent   = (startHitPoint - _parentTransformHandle.Target.PivotPosition).normalized;
             _biTangent = Vector3.Cross(_rotatedAxis, _tangent);
         }
         

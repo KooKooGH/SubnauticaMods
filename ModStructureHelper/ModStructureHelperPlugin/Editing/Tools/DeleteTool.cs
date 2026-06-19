@@ -31,7 +31,7 @@ public class DeleteTool : ToolBase
         {
             if (selected != null)
             {
-                StructureInstance.Main.DeleteEntity(selected, true);
+                StructureInstance.Main.DeleteEntity(selected.gameObject, true);
             }
         }
         SelectionManager.ClearSelection();

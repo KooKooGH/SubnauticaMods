@@ -62,7 +62,7 @@ namespace ModStructureHelperPlugin.Handle.Handles.Scale
             float   closestT = HandleMathUtils.ClosestPointOnRay(_raxisRay, cameraRay);
             Vector3 hitPoint = _raxisRay.GetPoint(closestT);
             
-            float distance = Vector3.Distance(_parentTransformHandle.Target.position, hitPoint);
+            float distance = Vector3.Distance(_parentTransformHandle.Target.PivotPosition, hitPoint);
             float axisScaleDelta    = distance / _interactionDistance - 1f;
 
             axisScaleDelta = _parentTransformHandle.snappingManager.SnapScale(axisScaleDelta, _startScale, _axis);
@@ -70,7 +70,7 @@ namespace ModStructureHelperPlugin.Handle.Handles.Scale
             delta = axisScaleDelta;
             Vector3 scale = Vector3.Scale(_startScale, _axis * axisScaleDelta + Vector3.one);
 
-            _parentTransformHandle.Target.localScale = scale;
+            _parentTransformHandle.Target.SetScale(scale);
 
             base.Interact(p_previousPosition);
         }
@@ -78,20 +78,20 @@ namespace ModStructureHelperPlugin.Handle.Handles.Scale
         public override void StartInteraction(Vector3 p_hitPoint)
         {
             base.StartInteraction(p_hitPoint);
-            _startScale = _parentTransformHandle.Target.localScale;
+            _startScale = _parentTransformHandle.Target.Scale;
 
             Vector3 raxis = _parentTransformHandle.space == HandleSpace.LOCAL
-                ? _parentTransformHandle.Target.rotation * _axis
+                ? _parentTransformHandle.Target.PivotRotation * _axis
                 : _axis;
             
-            _raxisRay = new Ray(_parentTransformHandle.Target.position, raxis);
+            _raxisRay = new Ray(_parentTransformHandle.Target.PivotPosition, raxis);
             
             Ray cameraRay = Camera.main.ScreenPointToRay(RuntimeTransformHandle.GetMousePosition());
             
             float   closestT = HandleMathUtils.ClosestPointOnRay(_raxisRay, cameraRay);
             Vector3 hitPoint = _raxisRay.GetPoint(closestT);
             
-            _interactionDistance = Vector3.Distance(_parentTransformHandle.Target.position, hitPoint);
+            _interactionDistance = Vector3.Distance(_parentTransformHandle.Target.PivotPosition, hitPoint);
         }
     }
 }

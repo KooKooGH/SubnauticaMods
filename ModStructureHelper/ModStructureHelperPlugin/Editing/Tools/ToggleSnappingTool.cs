@@ -227,7 +227,7 @@ public class ToggleSnappingTool : ToolBase
     
     private void UpdateSnappingGridPreview()
     {
-        _snapGridPreview.SetActive(manager.snappingManager.UseGlobalGrid);
+        _snapGridPreview.SetActive(manager.snappingManager.GetUseGlobalGrid());
         _snapGridPreview.transform.position = gridCenterField.Value;
         _snapGridPreview.transform.eulerAngles = gridRotationField.Value;
     }
