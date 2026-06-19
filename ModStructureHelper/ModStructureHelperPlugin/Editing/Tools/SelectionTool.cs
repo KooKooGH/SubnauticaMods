@@ -54,7 +54,7 @@ public class SelectionTool : ToolBase
 
             if (selectionResultNormal == SelectionManager.ObjectRootResult.Failed)
             {
-                if (!prioritizeTriggers && Plugin.ModConfig.ClickOffToUnselect)
+                if (!prioritizeTriggers && Plugin.ModConfig.ClickOffToUnselect && !GameInput.GetButtonHeld(StructureHelperInput.SelectMultipleModifier))
                 {
                     SelectionManager.ClearSelection();
                 }
@@ -62,7 +62,7 @@ public class SelectionTool : ToolBase
             }
         }
 
-        if (!prioritizeTriggers && Plugin.ModConfig.ClickOffToUnselect)
+        if (!prioritizeTriggers && Plugin.ModConfig.ClickOffToUnselect && !GameInput.GetButtonHeld(StructureHelperInput.SelectMultipleModifier))
         {
             SelectionManager.ClearSelection();
             return;
