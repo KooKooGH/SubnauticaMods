@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using ModStructureHelperPlugin.UI;
 using ModStructureHelperPlugin.UndoSystem;
 using UnityEngine;
@@ -33,6 +34,16 @@ public class TransformableObject : MonoBehaviour, IOriginator
         public int SaveFrame { get; }
         public bool Invalid => Object == null || Object.gameObject == null;
         
+        public void RestoreSync()
+        {
+            if (Object == null)
+            {
+                ErrorMessage.AddMessage("Attempting to undo transformation on deleted object!");
+                return;
+            }
+            Object.Restore(this);
+        }
+
         public Memento(TransformableObject o, Vector3 position, Quaternion rotation, Vector3 scale, int saveFrame)
         {
             Object = o;
@@ -40,16 +51,6 @@ public class TransformableObject : MonoBehaviour, IOriginator
             Rotation = rotation;
             Scale = scale;
             SaveFrame = saveFrame;
-        }
-
-        public IEnumerator Restore()
-        {
-            if (Object == null)
-            {
-                ErrorMessage.AddMessage("Attempting to undo transformation on deleted object!");
-                yield break;
-            }
-            Object.Restore(this);
         }
     }
 }
