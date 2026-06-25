@@ -11,6 +11,7 @@ using KallieʼsPropPack.Prefabs.Lab;
 using KallieʼsPropPack.Prefabs.Precursor;
 using KallieʼsPropPack.Prefabs.SingleCellLandscape;
 using KallieʼsPropPack.Prefabs.Trees;
+using KallieʼsPropPack.Prefabs.VFX;
 using Nautilus.Assets;
 using Nautilus.Assets.PrefabTemplates;
 using Nautilus.Handlers;
@@ -358,6 +359,10 @@ public class Plugin : BaseUnityPlugin
         new CreatureCorpse("RiverProwler", TechType.SpineEel, LargeWorldEntity.CellLevel.Medium).Register();
         new CreatureCorpse("Ampeel", TechType.Shocker, LargeWorldEntity.CellLevel.Medium).Register();
 
+        // VFX
+        
+        BaseLeakVFX.Register();
+        
         // Register lab entities
 
         var prefabLoader = new EpicPrefabLoader(new[] { Assembly }, Bundle);
