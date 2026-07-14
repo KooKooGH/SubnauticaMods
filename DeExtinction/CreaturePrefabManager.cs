@@ -357,13 +357,12 @@ internal static class CreaturePrefabManager
                 eggMaterial.color = Color.white;
                 eggMaterial.SetFloat("_SpecInt", 5);
                 eggMaterial.SetFloat("_Shininess", 7);
-                eggMaterial.SetFloat("_Fresnel", 0);
                 eggMaterial.SetFloat("_MyCullVariable", 0);
                 eggMaterial.EnableKeyword("MARMO_EMISSION");
                 eggMaterial.SetFloat("_GlowStrength", 0);
                 eggMaterial.SetFloat("_GlowStrengthNight", 0);
                 eggMaterial.SetFloat("_EmissionLMNight", 0.01f);
-                eggMaterial.SetFloat("_Fresnel", 0.01f);
+                eggMaterial.SetFloat("_Fresnel", 0.7f);
                 eggMaterial.SetFloat("_IBLreductionAtNight", 0.3f);
             };
         }
