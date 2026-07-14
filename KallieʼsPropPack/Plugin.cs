@@ -110,6 +110,9 @@ public class Plugin : BaseUnityPlugin
 
         new LushCaveBrine("LushCaveBrine",
             "d931cce0-b6b3-4f70-aa08-e1ed5ef12b29", "KallieʼsPropPack/Kelp").Register();
+        
+        HangingSeaweedFix.Register();
+        
         // Register grasses
 
         const string coralGrassPrefix = "Kallie_Grass_CoralGrass_";
