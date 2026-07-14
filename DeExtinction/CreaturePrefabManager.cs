@@ -354,7 +354,7 @@ internal static class CreaturePrefabManager
             {
                 var renderer = go.GetComponentInChildren<Renderer>();
                 var eggMaterial = renderer.material;
-                eggMaterial.color = new Color(1, 1,1, 2);
+                eggMaterial.color = Color.white;
                 eggMaterial.SetFloat("_SpecInt", 5);
                 eggMaterial.SetFloat("_Shininess", 7);
                 eggMaterial.SetFloat("_Fresnel", 0);
@@ -363,6 +363,8 @@ internal static class CreaturePrefabManager
                 eggMaterial.SetFloat("_GlowStrength", 0);
                 eggMaterial.SetFloat("_GlowStrengthNight", 0);
                 eggMaterial.SetFloat("_EmissionLMNight", 0.01f);
+                eggMaterial.SetFloat("_Fresnel", 0.01f);
+                eggMaterial.SetFloat("_IBLreductionAtNight", 0.3f);
             };
         }
         else if (classId == "PyrambassisEgg")
