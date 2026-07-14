@@ -38,7 +38,7 @@
     <Import Project="..\Directories.targets" />
 
     <PropertyGroup>
-        <SubnauticaPackagesDir>Packages/Subnautica</SubnauticaPackagesDir>
+        <CopyToThunderkitDir>Assets/References</CopyToThunderkitDir>
         <PluginsDir>$(GameDir)\BepInEx\plugins</PluginsDir>
     </PropertyGroup>
 
@@ -47,6 +47,6 @@
     </Target>
     
     <Target Name="CopyToThunderKitFolder" AfterTargets="Build">
-        <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(UnityProjectDir)\$(SubnauticaPackagesDir)"/>
+        <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(UnityProjectDir)\$(CopyToThunderkitDir)"/>
     </Target>
 </Project>
