@@ -53,7 +53,7 @@ public static class ModAudio
         RegisterMusic(PodshellMusic, "PodshellLeviathanOST", 2);
     }
 
-    private static void RegisterPodshellSound(FMODAsset asset, string clipName, float minDistance, float maxDistance, string bus = AudioUtils.BusPaths.UnderwaterCreatures)
+    private static void RegisterPodshellSound(FMODAsset asset, string clipName, float minDistance, float maxDistance, string bus = "bus:/master/SFX_for_pause/PDA_pause/all/SFX/creatures")
     {
         var sound = AudioUtils.CreateSound(Plugin.Assets.LoadAsset<AudioClip>(clipName), AudioUtils.StandardSoundModes_3D);
         sound.set3DMinMaxDistance(minDistance, maxDistance);
