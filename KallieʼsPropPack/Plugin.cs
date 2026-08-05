@@ -371,6 +371,7 @@ public class Plugin : BaseUnityPlugin
         var prefabLoader = new EpicPrefabLoader(new[] { Assembly }, Bundle);
         prefabLoader.LoadPrefabs(JsonConvert.DeserializeObject<LoadedPrefabRegistrationData>(
             Bundle.LoadAsset<TextAsset>("LabPrefabs").text));
+        FireExtinguisherHolderDeco.Register();
 
         // Register coral entities
         
