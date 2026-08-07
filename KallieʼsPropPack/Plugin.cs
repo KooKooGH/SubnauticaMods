@@ -113,6 +113,19 @@ public class Plugin : BaseUnityPlugin
         
         HangingSeaweedFix.Register();
         
+        // Sandpile (without destruction)
+        CustomPrefab sandpile = new CustomPrefab(PrefabInfo.WithTechType("Kallies_Sandpile")
+            .WithFileName("KallieʼsPropPack/Cave/Sandpile"));
+        sandpile.SetGameObject(new CloneTemplate(sandpile.Info, "9130679a-3a85-4003-b779-92233fbbeed4")
+        {
+            ModifyPrefab = obj =>
+            {
+                DestroyImmediate(obj.GetComponentInChildren<PrecursorAquariumSand>(true));
+                DestroyImmediate(obj.GetComponentInChildren<VFXController>(true));
+            }
+        });
+        sandpile.Register();
+        
         // Register grasses
 
         const string coralGrassPrefix = "Kallie_Grass_CoralGrass_";
