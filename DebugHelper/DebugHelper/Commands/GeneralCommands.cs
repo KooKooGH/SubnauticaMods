@@ -38,6 +38,15 @@ namespace DebugHelper.Commands
         {
             Utils.DebugDrawStar(Player.main.transform.position, radius, Color.cyan, duration);
         }
+        
+        [ConsoleCommand("w")]
+        public static void WarpForwardShortcut(float distance, bool setWalk = false)
+        {
+        Transform aimingTransform = Player.main.camRoot.GetAimingTransform();
+        Player.main.SetPosition(Player.main.transform.position + aimingTransform.forward * distance);
+        Player.main.OnPlayerPositionCheat();
+        Player.main.precursorOutOfWater = setWalk;
+        }
 
         [ConsoleCommand("lookingat")]
         public static void LookingAt(bool hitTriggers = false)
